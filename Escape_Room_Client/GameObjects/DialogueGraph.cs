@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Escape_Room_Client.GameObjects
 {
-    class Stoel : AbsPOI
+    public class DialogueGraph : AbsDialogueGraph
     {
-        public Stoel(string id, string desc) : base(id, desc)
-        {
-            
-        }
 
+        public DialogueGraph(string RootID, IInteraction data) : base(RootID, data)
+        {
+
+        }
     }
 }

@@ -4,10 +4,12 @@ using System.Text;
 
 namespace Escape_Room_Client.GameObjects.Interfaces
 {
-    interface IInteractable
+    public interface IInteractable
     {
         public int InteractState { get; set; }
 
-        public List<IInteraction> Interactions { get; set; }
+        public List<IGraph<IInteraction>> Interactions { get; set; }
+
+        public void OnInteract();
     }
 }

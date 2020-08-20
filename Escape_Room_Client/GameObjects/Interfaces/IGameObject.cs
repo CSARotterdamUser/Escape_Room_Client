@@ -4,8 +4,12 @@ using System.Text;
 
 namespace Escape_Room_Client.GameObjects.Interfaces
 {
-    interface IGameObject : IInteractable, IExaminable
+    public interface IGameObject : IInteractable, IExaminable
     {
         public string ID { get; set; }
+
+        public string Description { get; set; }
+
+        public void OnSelect();
     }
 }

@@ -5,10 +5,15 @@ using System.Text;
 
 namespace Escape_Room_Client.GameObjects
 {
-    class DialogueData
+    public class DialogueData
     {
         public string OptionText { get; set; }
-        public IInteraction Interaction { get; set; }
         public string NextDialogue { get; set; }
+
+        public DialogueData(string optiontext, string nextdialogue)
+        {
+            OptionText = optiontext;
+            NextDialogue = nextdialogue;
+        }
     }
 }

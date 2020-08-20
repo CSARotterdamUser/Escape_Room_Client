@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Escape_Room_Client.GameObjects.Maybe
 {
-    class None<T> : IMaybe<T>
+    public class None<T> : IMaybe<T>
     {
         public bool HasValue { get; set; }
         public None() : base()

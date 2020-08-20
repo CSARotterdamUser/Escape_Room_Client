@@ -6,12 +6,11 @@ using System.Text;
 
 namespace Escape_Room_Client.GameObjects
 {
-    class Stoel : AbsPOI
+    public class Traversable : AbsTraversable
     {
-        public Stoel(string id, string desc) : base(id, desc)
+        public Traversable(string id ,string desc, IRoom destination) : base(id, desc, destination)
         {
-            
-        }
 
+        }
     }
 }

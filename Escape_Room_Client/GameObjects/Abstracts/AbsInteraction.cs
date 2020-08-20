@@ -6,8 +6,17 @@ using System.Text;
 
 namespace Escape_Room_Client.GameObjects
 {
-    abstract class AbsInteraction : IInteraction
+    public abstract class AbsInteraction : IInteraction
     {
-        abstract public IMaybe<Dialog> Next();
+        public IMaybe<Action> Callback { get; set; }
+
+        public DialogueData Data { get; set; }
+
+        public AbsInteraction(DialogueData data, Action callback = null)
+        {
+            Data = data;
+            if (callback == null) Callback = new None<Action>();
+            else Callback = new Some<Action>(callback);
+        }
     }
 }

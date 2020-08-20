@@ -1,9 +1,14 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Escape_Room_Client.GameObjects.Interfaces
 {
-    interface IInteraction
+    public interface IInteraction
     {
-        public IMaybe<Dialog> Next();
+        public IMaybe<Action> Callback { get; set; }
+
+        public DialogueData Data { get; set; }
+
+
     }
 }

@@ -1,40 +1,37 @@
 ﻿using Escape_Room_Client.GameObjects.Interfaces;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Escape_Room_Client.GameObjects.Abstracts
 {
-    public abstract class AbsTraversable : ITraversable
+    class AbsPOI : IGameObject
     {
         public string ID { get; set; }
+        public int InteractState { get ; set; }
+        public List<IGraph<IInteraction>> Interactions { get ; set; }
         public string Description { get; set; }
-        public int InteractState { get; set; }
-        public int ExamineState { get; set; }
-        public List<string> ExamineResults { get; set; }
+        public int ExamineState { get ; set ; }
+        public List<string> ExamineResults { get ; set ; }
 
-        public IRoom Destination  { get; set; }
-
-        public List<IGraph<IInteraction>> Interactions { get; set; }
-
-        public AbsTraversable(string id, string desc, IRoom destination)
+        public AbsPOI(string id, string desc)
         {
             ID = id;
             Description = desc;
             InteractState = 0;
-            ExamineState = 0;
-            Destination = destination;
             Interactions = new List<IGraph<IInteraction>>();
-            
+            ExamineState = 0;
+            ExamineResults = new List<string>();
         }
+
+        
 
         public void OnInteract()
         {
-            OnInteract((GraphNode<IInteraction>) Interactions[InteractState].Root);
+            OnInteract((GraphNode<IInteraction>)Interactions[InteractState].Root);
         }
 
-        private void OnInteract(GraphNode<IInteraction> curr) 
+        private void OnInteract(GraphNode<IInteraction> curr)
         {
             Console.WriteLine(curr.Value.Data.NextDialogue);
 
@@ -45,9 +42,9 @@ namespace Escape_Room_Client.GameObjects.Abstracts
             Console.WriteLine("Pick an option");
             int choice = int.Parse(Console.ReadLine()) - 1;
 
-            GraphNode<IInteraction> next = (GraphNode<IInteraction>) curr.NextOptions[choice];
+            GraphNode<IInteraction> next = (GraphNode<IInteraction>)curr.NextOptions[choice];
 
-            if (next.Value.Callback.HasValue) 
+            if (next.Value.Callback.HasValue)
             {
                 next.Value.Callback.GetValue()();
             }
@@ -55,7 +52,7 @@ namespace Escape_Room_Client.GameObjects.Abstracts
             {
                 OnInteract(next);
             }
-            else 
+            else
             {
                 Console.WriteLine(next.Value.Data.NextDialogue);
             }
