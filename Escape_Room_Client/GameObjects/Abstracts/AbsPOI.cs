@@ -7,14 +7,14 @@ namespace Escape_Room_Client.GameObjects.Abstracts
 {
     class AbsPOI : IGameObject
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
         public int InteractState { get ; set; }
         public List<IGraph<IInteraction>> Interactions { get ; set; }
         public string Description { get; set; }
         public int ExamineState { get ; set ; }
         public List<string> ExamineResults { get ; set ; }
 
-        public AbsPOI(string id, string desc)
+        public AbsPOI(int id, string desc)
         {
             ID = id;
             Description = desc;

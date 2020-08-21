@@ -10,14 +10,14 @@ namespace Escape_Room_Client.GameObjects
         public List<IGameObject> POIs { get; set; }
         public List<IGameObject> Items { get; set; }
         public List<ITraversable> Traversables { get; set; }
-        public string ID { get; set; }
+        public int ID { get; set; }
         public string Description { get; set; }
         public int InteractState { get; set; }
         public List<IGraph<IInteraction>> Interactions { get; set; }
         public int ExamineState { get; set; }
         public List<string> ExamineResults { get; set; }
 
-        public Room(string id, string desc)
+        public Room(int id, string desc)
         {
             ID = id;
             Description = desc;

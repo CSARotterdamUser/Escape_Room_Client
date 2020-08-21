@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "YH6k82mFlnZKrDwMUYoWoVrzuoFLi4cK0jQw5uw3Wzbbk/J30caKArAmSHsXMVHP5Enjlpv7iNWmx9pHea0QcA==",
+  "dgSpecHash": "i/85tD2lXtXTKxlPNM4e8RI45fPTcdLaXhCcUVsZStrCx03R+rJ4km3CHq4YniX+ZIfQymeoYE7fDbZMLRsoHA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Quinten\\Documents\\GitHub\\Escape_Room_Client\\Escape_Room_Client\\Escape_Room_Client.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Quinten\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

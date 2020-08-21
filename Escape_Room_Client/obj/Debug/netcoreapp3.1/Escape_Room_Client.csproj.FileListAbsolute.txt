@@ -7,7 +7,9 @@ C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\bin\Debu
 C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.csprojAssemblyReference.cache
 C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.AssemblyInfoInputs.cache
 C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.AssemblyInfo.cs
-C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.csproj.CoreCompileInputs.cache
 C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.dll
 C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.pdb
 C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.genruntimeconfig.cache
+C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.csproj.CoreCompileInputs.cache
+C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\Escape_Room_Client\obj\Debug\netcoreapp3.1\Escape_Room_Client.csproj.CopyComplete

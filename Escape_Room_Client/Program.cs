@@ -4,15 +4,61 @@ using Escape_Room_Client.GameObjects.Interaction;
 using Escape_Room_Client.GameObjects.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.WebSockets;
+
+using System.Threading;
+using Newtonsoft.Json;
 
 namespace Escape_Room_Client
 {
     class Program
     {
-        static Player Setup() 
+        static void MakeSockets()
         {
-            var Room1 = new Room("Kamer1", "Een kamer");
-            var Room2 = new Room("Kamer2", "Een kamer");
+            string WEBSERVICE_URL = "http://localhost:5000/api/socket/create";
+            try
+            {
+                var webRequest = System.Net.WebRequest.Create(WEBSERVICE_URL);
+                if (webRequest != null)
+                {
+                    webRequest.Method = "GET";
+                    webRequest.Timeout = 12000;
+                    webRequest.ContentType = "application/json";
+                    webRequest.Headers.Add("Session-Id", "HeyHiThereIAmAToken");
+                    webRequest.Headers.Add("Group-Id", "5");
+
+                    using (System.IO.Stream s = webRequest.GetResponse().GetResponseStream())
+                    {
+                        using (System.IO.StreamReader sr = new System.IO.StreamReader(s))
+                        {
+                            var jsonResponse = sr.ReadToEnd();
+                            ConnectInfo connect = JsonConvert.DeserializeObject<ConnectInfo>(jsonResponse);
+                            Connect(connect);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        static void Connect(ConnectInfo connect) 
+        {
+            ClientWebSocket listener = new ClientWebSocket();
+            listener.ConnectAsync(new Uri("wss://localhost:5001/socket/" + connect.Listener.ToString()), CancellationToken.None);
+
+            ClientWebSocket sender = new ClientWebSocket();
+            sender.ConnectAsync(new Uri("wss://localhost:5001/socket/" + connect.Sender.ToString()), CancellationToken.None);
+            
+        }
+        static Player Setup()
+        {
+
+            var Room1 = new Room(0, "Een kamer");
+            var Room2 = new Room(1, "Een kamer");
             var chair = new Stoel("Kamer1Stoel", "Een stoel");
             var deur = new Traversable("DeurKamer1Naar2", "Een deur", Room2);
 
@@ -56,23 +102,16 @@ namespace Escape_Room_Client
         }
         static void Main(string[] args)
         {
-            
+            MakeSockets();
             Player player = Setup();
             Console.WriteLine("Je wordt wakker in een kamer. Rond je zie je: \n");
 
-
-
-            while (true) 
+            while (true)
             {
                 player.Position.OnSelect();
             }
-
-            
-
-
-
         }
 
-        
+
     }
 }
