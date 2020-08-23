@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Escape_Room_Client
 {
-    class Player
+    public class Player
     {
         public IRoom Position;
 
