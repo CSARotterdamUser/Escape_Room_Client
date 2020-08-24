@@ -83,11 +83,11 @@ namespace Escape_Room_Client
             Socket = new ClientSocket(sock);
             Socket.Listen();
 
-            await StartGame(token);
+            StartGame(token);
 
         }
 
-        static async Task StartGame(string token)
+        static void StartGame(string token)
         {
 
             string WEBSERVICE_URL = "http://localhost:5000/api/socket/start";
@@ -123,14 +123,12 @@ namespace Escape_Room_Client
 
 
             while (Socket == null) ;
-
-            Console.WriteLine("Je wordt wakker in een kamer. Rond je zie je: ");
-
-
+            Console.WriteLine("Je wordt wakker in een kamer.)
             while (true)
             {
                 if (CurrentRoom != null)
                 {
+                    Console.WriteLine("Rond je zie je: ");
                     CurrentRoom.Interact();
                 }
 
@@ -140,7 +138,7 @@ namespace Escape_Room_Client
 
         static async void OnProcessExit(object sender, EventArgs e)
         {
-            if (Socket != null)
+            if (Socket != null && Socket.Socket != null && (Socket.Socket.State != WebSocketState.Aborted || Socket.Socket.State != WebSocketState.Closed))
             {
                 await Socket.Send("Disconnect");
             }

@@ -23,10 +23,10 @@ namespace Escape_Room_Client.Packet
             var choice = Console.ReadLine();
             switch (choice.ToLower())
             {
-                case ("interact"):
+                case ("1"):
                     Dialogue.Interact();
                     break;
-                case ("examine"):
+                case ("2"):
                     Console.WriteLine(Info.Examine);
                     break;
                 default:

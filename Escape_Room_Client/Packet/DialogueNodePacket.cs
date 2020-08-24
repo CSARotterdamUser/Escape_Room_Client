@@ -18,22 +18,23 @@ namespace Escape_Room_Client.Packet
         {
             Console.WriteLine(Option.nextDialogueText);
             int num = 1;
+            if (Children.Count == 0) { return; }
             foreach (DialogueNodePacket child in Children)
             {
                 Console.WriteLine(num.ToString() + ". " + child.Option.OptionText);
+                num++;
             }
             PickOption();
         }
 
-        internal void PickOption()
+        internal async void PickOption()
         {
-            Console.WriteLine("Choose an object to investigate");
             int choice = Choose();
             if (choice < Children.Count)
             {
                 if (Children[choice].Option.FunctionID != null) 
                 {
-                    Sockets.Send(Children[choice].Option.FunctionID);
+                    Console.WriteLine("Would call" + Children[choice].Option.FunctionID);
                 }
                 Children[choice].Interact();
             }
@@ -47,7 +48,7 @@ namespace Escape_Room_Client.Packet
         public int Choose()
         {
             int res;
-            Console.WriteLine("Choose an object to investigate");
+            Console.WriteLine("Choose an option investigate");
             var choice = Console.ReadLine();
             bool result = int.TryParse(choice, out res);
             while (!result)

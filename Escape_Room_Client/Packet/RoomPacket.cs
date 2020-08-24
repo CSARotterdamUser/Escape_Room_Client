@@ -26,7 +26,6 @@ namespace Escape_Room_Client.Packet
 
         public void PickPOI() 
         {
-            Console.WriteLine("Choose an object to investigate");
             int choice = Choose();
             if (choice < POIs.Count)
             {

@@ -57,8 +57,13 @@ namespace Escape_Room_Client.Services
         {
             try
             {
-                Program.CurrentRoom = JsonConvert.DeserializeObject<RoomPacket>(json);
+                RoomPacket packet = JsonConvert.DeserializeObject<RoomPacket>(json);
+                if (packet != null) 
+                {
+                    Program.CurrentRoom = packet;
+                }
             }
+            
             catch { }
         }
 
