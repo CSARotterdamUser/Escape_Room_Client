@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Escape_Room_Client.Services;
+using System;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Escape_Room_Client.Packet
 {
     public class DialogueNodePacket
     {
-        public ClientWebSocket Socket { get; set; }
+        public ClientSocket Sockets { get; set; }
         public List<DialogueNodePacket> Children { get; set; }
 
         public DialogueOptionpacket Option { get; set; }
@@ -32,8 +33,7 @@ namespace Escape_Room_Client.Packet
             {
                 if (Children[choice].Option.FunctionID != null) 
                 {
-                    byte[] buffer = Encoding.UTF8.GetBytes(Children[choice].Option.FunctionID);
-                    Socket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None)
+                    Sockets.Send(Children[choice].Option.FunctionID);
                 }
                 Children[choice].Interact();
             }

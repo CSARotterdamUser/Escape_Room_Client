@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Escape_Room_Client.Packet
 {
-    class POIPacket
+    public class POIPacket
     {
         public InfoPacket Info { get; set; }
 

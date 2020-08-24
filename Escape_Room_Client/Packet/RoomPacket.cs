@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Escape_Room_Client.Packet
 {
-    class RoomPacket
+    public class RoomPacket
     {
         public int RoomID { get; set; }
 

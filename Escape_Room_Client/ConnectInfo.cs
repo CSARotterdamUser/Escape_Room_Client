@@ -6,14 +6,11 @@ namespace Escape_Room_Client
 {
     public class ConnectInfo
     {
-        public int Listener { get; set; }
+        public int SocketID { get; set; }
 
-        public int Sender { get; set; }
-
-        public ConnectInfo(int listener, int sender)
+        public ConnectInfo(int socketID)
         {
-            Listener = listener;
-            Sender = sender;
+            SocketID = socketID;
         }
 
         public ConnectInfo() { }
