@@ -123,7 +123,7 @@ namespace Escape_Room_Client
 
 
             while (Socket == null) ;
-            Console.WriteLine("Je wordt wakker in een kamer.)
+            Console.WriteLine("Je wordt wakker in een kamer.");
             while (true)
             {
                 if (CurrentRoom != null)

@@ -48,7 +48,7 @@ namespace Escape_Room_Client.Packet
         public int Choose()
         {
             int res;
-            Console.WriteLine("Choose an option investigate");
+            Console.WriteLine("Choose an option");
             var choice = Console.ReadLine();
             bool result = int.TryParse(choice, out res);
             while (!result)
