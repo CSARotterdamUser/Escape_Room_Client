@@ -1,0 +1,64 @@
+.join-group-container{
+    margin: 0 auto;
+    width: 80vw;
+    height: 80vh;
+    border: 2px white solid;
+}
+
+.join-group-text{
+    text-align: center;
+    font-size: small;
+}
+
+.group-options-container{
+    height: 20%;
+    display: inline-flex;
+    width: 100%;
+}
+
+.group-container{
+    display: inline-block;
+    min-width: 47%;
+    width: 47%;
+    margin: 1%;
+    border: 2px white solid;
+}
+
+.group-button{
+    position: relative;
+    z-index: 101;
+    font-family: joystix;
+    color:white;
+
+    background-color: transparent;
+
+    font-size: small;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+    margin: 2px auto;
+    padding: 4px;
+    display: block;
+}
+
+.group-button:hover{
+    background-color: white;
+    color: black
+}
+
+.group-code-input {
+    position: relative;
+    display: block;
+    z-index: 101;
+
+    font-family: joystix;
+    text-align: center;
+
+    margin: 0.5em auto;
+    padding: 1em;
+
+    border: 1px solid #003B00;
+    border-radius: 4px;
+}
+

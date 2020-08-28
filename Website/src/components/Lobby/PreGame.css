@@ -1,0 +1,94 @@
+.static-group-info-container{
+    display: inline-flex;
+    flex-direction: column;
+    width: 30%;
+    height: 70vh;
+    margin: 4%;
+    border: 2px white solid;
+}
+
+.connected-group-info-container{
+    display: inline-flex;
+    flex-direction: column;
+    height: 70vh;
+    width: 50%;
+    margin: 4%;
+    border: 2px white solid;
+}
+
+.static-group-member-container {
+    display: inline-block;
+}
+
+.connected-group-member-container {
+    display: inline-block;
+}
+
+.static-group-member-container > div{
+    margin: 2px;
+}
+
+.connected-group-member-container > div{
+    margin: 2px;
+}
+
+
+
+.button{
+    display: inline;
+    position: relative;
+    z-index: 101;
+
+    font-family: joystix;
+    font-size: x-small;
+    color:white;
+
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+    margin-right: 2px;
+}
+
+.kicked-in-the-nuts-with-the-fury-of-a-thousand-suns{
+
+
+    background-color: transparent;
+
+    padding: 4px;
+}
+.kicked-in-the-nuts-with-the-fury-of-a-thousand-suns:hover{
+    background-color: white;
+    color: black
+}
+
+.delete-group-button{
+    background-color: red;
+}
+
+.leave-group-button{
+    background-color: orange;
+}
+
+.connected-group-info-container > button {
+    display: inline;
+    position: relative;
+    z-index: 101;
+
+    font-family: joystix;
+    font-size: x-small;
+    color:white;
+
+    background-color: transparent;
+
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+    margin-bottom: 2px;
+}
+
+.connected-group-info-container > button:hover {
+    background-color: white;
+    color: black
+}
