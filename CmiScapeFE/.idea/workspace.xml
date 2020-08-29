@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="53b37988-0ba8-4ddd-a6c8-750c97d71795" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="CSS File" />
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1gg03pMLaVFM9Nj2kbZAv5Uq2r9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmiscapefe/src/assets" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="ts.external.directory.path" value="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\node_modules\typescript\lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\assets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\assets" />
+      <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\components\Intro" />
+      <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\fonts" />
+      <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\components\Lobby" />
+      <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="53b37988-0ba8-4ddd-a6c8-750c97d71795" name="Default Changelist" comment="" />
+      <created>1598520731914</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598520731914</updated>
+      <workItem from="1598520733571" duration="50772000" />
+      <workItem from="1598575139954" duration="6020000" />
+      <workItem from="1598599414511" duration="54662000" />
+      <workItem from="1598703451211" duration="33770000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="687" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598625807889">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="687" y="322" key="#com.intellij.fileTypes.FileTypeChooser/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598575711263" />
+    <state x="687" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598625807889" />
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1598634551191">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598634551191" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598625813463">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598625813463" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1598555001605">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598555001605" />
+    <state x="461" y="165" key="SettingsEditor" timestamp="1598521352260">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="165" key="SettingsEditor/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598521352260" />
+    <state x="604" y="134" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598736415229">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="604" y="134" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598736415229" />
+    <state x="736" y="292" key="refactoring.ChangeSignatureDialog" timestamp="1598600699255">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="736" y="292" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598600699255" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1598714545853">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598714545853" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598655940249" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1598634399116">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598564047271" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598634399116" />
+  </component>
+</project>
