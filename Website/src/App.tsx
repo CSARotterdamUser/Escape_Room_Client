@@ -1,17 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
 import './App.css';
 import {AuthLoginResponse, GroupJoinResponse, UserLoggedIn} from "./components/ApiModels";
 import {checkAuthIsValid} from "./components/Persistence";
 import LoginComponent from "./components/Login/LoginComponent";
 import LobbyComponent from "./components/Lobby/LobbyComponent";
-import HomeComponent from "./components/Home/HomeComponent";
+import GameComponent from "./components/Game/GameComponent";
+import IntroComponent from "./components/Intro/IntroComponent";
+import {RoomPacket} from "./Socket/Packets";
 
 interface AppState {
     userloggedin: UserLoggedIn
     user: AuthLoginResponse | undefined
     group: GroupJoinResponse | undefined
+    roomPacket: RoomPacket | undefined
+    socket: WebSocket | undefined
 }
 
 export default class App extends React.Component<{}, AppState> {
@@ -23,7 +26,10 @@ export default class App extends React.Component<{}, AppState> {
                 role: null
             },
             user: undefined,
-            group: undefined
+            group: undefined,
+            roomPacket: undefined,
+            socket: undefined
+
         }
     }
 
@@ -44,33 +50,56 @@ export default class App extends React.Component<{}, AppState> {
         this.setState({group: data})
     }
 
+    private updateRoomPacket = (data: RoomPacket) => {
+        this.setState({roomPacket: data})
+    }
+
+    private updateSocket = (data: WebSocket) => {
+        this.setState({socket: data})
+    }
+
     public render() {
         return (
             <BrowserRouter>
+                <Switch>
+                    <Route path="/" exact>
+                        {/*<HomeComponent user={checkAuthIsValid}/>*/}
+                        <IntroComponent/>
+                    </Route>
+                    <div className="page-container">
+                        <div className="header">
+                            <p>CAPS</p> <p>CMYK</p> <p>CMI</p> <p>JMDR</p> <p>YMCA</p> <p>BRUH</p>
+                        </div>
+                        <div className="header white">
+                            <p className="titletab"> >>> Cmi/Scape.c.main();</p>
+                            <p>V.0.1.3658754</p>
+                        </div>
+                        <div className="content-wrap">
 
-                <div className="page-container">
-                    <div className="header">
-                        <p>CAPS</p> <p>BLK</p> <p>CMI</p> <p>JMDR</p>
-                    </div>
-                    <div className="header white">
-                        <p>V.0.1.3658754</p>
-                    </div>
-                    <div className="content-wrap">
-                        <Switch>
-                            <Route path="/" exact>
-                                <HomeComponent user={checkAuthIsValid}/>
-                            </Route>
+
                             <Route path="/login" exact>
                                 <LoginComponent updateAuth={this.updateAuth} updateUser={this.updateUser}/>
                             </Route>
                             <Route path="/lobby" exact>
-                                <LobbyComponent user={this.state.user} group={this.state.group} updateUser={this.updateUser} updateGroup={this.updateGroup}/>
+                                <LobbyComponent user={this.state.user} group={this.state.group}
+                                                updateUser={this.updateUser}
+                                                updateGroup={this.updateGroup}
+                                                updateRoom ={this.updateRoomPacket}
+                                                updateSocket={this.updateSocket}/>
                             </Route>
-                        </Switch>
-                    </div>
-                    <br/>
+                            <Route path="/play" exact>
+                                {this.state.user !== undefined && this.state.group !== undefined && this.state.roomPacket !== undefined && this.state.socket !== undefined
+                                    ? <GameComponent user={this.state.user} group={this.state.group} room={this.state.roomPacket} socket={this.state.socket}/> :
+                                    <Redirect to={"/lobby"}/>}
+                            </Route>
+                            {this.state.user !== undefined && this.state.group !== undefined && this.state.roomPacket !== undefined && this.state.socket !== undefined
+                                ? <Redirect to="/play"/>
+                                : undefined}
+                        </div>
+                        <br/>
 
-                </div>
+                    </div>
+                </Switch>
             </BrowserRouter>
 
         )

@@ -96,7 +96,7 @@ export default class JoinGroupComponent extends React.Component<JoinGroupProps, 
                 <div className="group-options-container">
                     <div className="group-container">
                         <p className="join-group-text">INSERT EXPLANATION ABOUT CREATING GROUP</p>
-                        {this.state.errorMessageCreate == "" ? undefined : <p className="join-group-text">{this.state.errorMessageCreate}</p>}
+                        {this.state.errorMessageCreate === "" ? undefined : <p className="join-group-text">{this.state.errorMessageCreate}</p>}
                         <button className="group-button" onClick={this.CreateGroup}>CREATE GROUP</button>
                     </div>
                     <div className="group-container">
@@ -113,7 +113,7 @@ export default class JoinGroupComponent extends React.Component<JoinGroupProps, 
                                 value={this.state.code}
                                 onChange={event => this.setState({code: event.target.value})}
                                 readOnly={this.state.checkingCode}/>
-                            {this.state.errorMessageJoin == "" ? undefined : <p className="join-group-text">{this.state.errorMessageJoin}</p>}
+                            {this.state.errorMessageJoin === "" ? undefined : <p className="join-group-text">{this.state.errorMessageJoin}</p>}
                             <input
                                 className="group-button"
                                 type="submit"

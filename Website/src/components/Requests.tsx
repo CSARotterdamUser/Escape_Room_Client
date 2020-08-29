@@ -1,5 +1,12 @@
-import {API_LOGIN_URL} from './Global'
-import {AuthLoginResponse, AuthWhoAmIResponse, GroupJoinResponse, ServiceResponse,} from './ApiModels'
+import {API_LOGIN_URL, API_GAME_URL} from './Global'
+import {
+    AuthLoginResponse,
+    AuthorizedUser,
+    AuthWhoAmIResponse,
+    ConnectInfo,
+    GroupJoinResponse,
+    ServiceResponse,
+} from './ApiModels'
 
 function request(
     requestType: 'POST' | 'PUT' | 'PATCH' | 'DELETE',
@@ -14,7 +21,7 @@ function request(
 
 function requestGet(
     headers: {}
-):HeadersInit {
+): HeadersInit {
     return new Headers(headers)
 }
 
@@ -56,6 +63,19 @@ export async function authRegisterRequest(
     return handleRestResponse(`${API_LOGIN_URL}/api/user/register`, options)
 }
 
+export async function userReadRequest(
+    id: number,
+    token: string
+): Promise<ServiceResponse<AuthorizedUser> | string> {
+    const options = requestGet(
+        {
+            "Session-Id": token
+        }
+    );
+    return handleRestResponseGet(`${API_LOGIN_URL}/api/user/read?id=${id}`, options);
+
+}
+
 export async function joinGroupRequest(
     code: string,
     userid: number
@@ -87,10 +107,104 @@ export async function createGroupRequest(
     const options = requestGet({
             "Session-Id": token
         }
-
     );
     const body = request("POST", {})
     return handleRestResponseHeader(`${API_LOGIN_URL}/api/group/create`, options, body);
+}
+
+export async function kickPlayerRequest(
+    playerID: number,
+    groupID: number,
+    token: string,
+): Promise<ServiceResponse<GroupJoinResponse> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Content-Type": "Application/Json"
+        }
+    );
+    const body = request("POST", {
+
+        "PlayerID":
+            playerID.toString(),
+        "GroupID":
+            groupID.toString()
+    })
+    //TODO: fix url
+    return handleRestResponseHeader(`${API_GAME_URL}///create`, options, body);
+}
+
+export async function UpdatePOIStateRequest(
+    token: string,
+    groupID: number,
+    playerID: number,
+    FunctionID: string
+): Promise<ServiceResponse<string> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Player-Id": playerID.toString(),
+            "Group-Id": groupID.toString(),
+
+        }
+    );
+
+    return handleRestResponseGet(`${API_GAME_URL}/api/poi/${FunctionID}`, options)
+}
+
+export async function UpdateItemStateRequest(
+    token: string,
+    groupID: number,
+    playerID: number,
+    FunctionID: string,
+    RoomID: number,
+    pickup: boolean
+): Promise<ServiceResponse<string> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Player-Id": playerID.toString(),
+            "Group-Id": groupID.toString(),
+            "Room-Id" : RoomID.toString(),
+            "pickup" : pickup
+        }
+    );
+    return handleRestResponseGet(`${API_GAME_URL}/api/item/${FunctionID}`, options)
+}
+
+export async function UpdateTraversableStateRequest(
+    token: string,
+    groupID: number,
+    playerID: number,
+    FunctionID: string
+): Promise<ServiceResponse<string> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Player-Id": playerID.toString(),
+            "Group-Id": groupID.toString(),
+        }
+    );
+    return handleRestResponseGet(`${API_GAME_URL}/api/door/${FunctionID}`, options)
+}
+
+
+export async function openWebSocketRequest(
+    token: string,
+    groupID: number
+): Promise<ServiceResponse<ConnectInfo> | string> {
+    const options = requestGet(
+        {
+            "Session-Id": token,
+            "Group-Id": groupID.toString()
+        });
+    return handleRestResponseGet(`${API_GAME_URL}/api/socket/create`, options)
+}
+
+export async function startGameRequest(
+    token: string
+): Promise<ServiceResponse<ConnectInfo> | string> {
+    const options = requestGet(
+        {
+            "Session-Id": token
+        });
+    return handleRestResponseGet(`${API_GAME_URL}/api/socket/start`, options)
 }
 
 
@@ -141,7 +255,7 @@ async function handleRestResponseHeader<T>(
         if (response.status >= 200 && response.status < 300) {
             return Promise.resolve(response.json()) as Promise<T>
         } else {
-            return "The backend returned an error, please contact an admin"
+            return "The backend returned an error, please contact an admin" + response.status.toString()
         }
     } catch (e) {
         return "ERR: " + e.message

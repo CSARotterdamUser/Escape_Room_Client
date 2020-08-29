@@ -17,6 +17,7 @@ export interface AuthWhoAmIResponse extends ServiceResponse<AuthorizedUser>{
 
 export interface AuthorizedUser {
     id: number
+    playerID: number
     userName: string
     group: number
     expireTime: number
@@ -49,5 +50,9 @@ export interface GroupJoinResponse{
     groupID: number,
     leaderID: number,
     members: Array<AuthorizedUser>
+}
+
+export interface ConnectInfo{
+    socketID: number,
 }
 

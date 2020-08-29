@@ -1,0 +1,189 @@
+.game-container{
+    width: 90vw;
+    height: 90vh;
+    margin: 0 auto;
+
+    border: 1px white solid;
+}
+
+
+.game-container > p {
+    font-size: small;
+    display: inline-block;
+    margin-block-start: 0.1em;
+    margin-block-end: 0.1em
+}
+
+.game-left-container-container{
+    display: inline-flex;
+    flex-direction: column;
+    float: left;
+    width: 40%;
+}
+
+.game-left-container-container>p{
+    margin-block-start: 0.5em;
+    margin-block-end: 0;
+    margin-inline-start: 1em;
+}
+
+
+.game-left-container{
+    display: inline-flex;
+    flex-direction: column;
+    float: left;
+    width: 75%;
+    height: 80vh;
+
+    padding-top: 5px;
+    margin: 1% 2% 1% 10%;
+
+    border: 2px white solid;
+}
+
+
+
+.game-left-container > p{
+    font-size: small;
+    display: inline-block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+
+    margin-left: 5em;
+
+    margin-inline-start: 40px;
+}
+
+.game-right-container{
+    display: inline-flex;
+    flex-direction: column;
+    float: right;
+    width: 55%;
+    height: 85vh;
+
+    padding-bottom: 20px;
+    margin: 1% 4% 1% 0;
+
+    border: 2px white solid;
+
+}
+
+.game-message-window{
+    height: 70vh;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 101;
+    position: relative;
+    border: 1px white solid;
+
+}
+
+.game-input-window{
+    height: 10vh;
+    width: 90%;
+
+    margin: 2em auto;
+
+    border: 1px white solid;
+}
+
+.game-input-box{
+    font-family: joystix;
+    font-size: x-large;
+    position: relative;
+    z-index: 101;
+    margin: 2vh;
+    width: 75%;
+    height: 5vh;
+}
+
+.game-input-window p, button, input {
+    font-size: x-large;
+    display: inline;
+}
+
+.game-input-window p{
+    margin-left: 0.5vw;
+}
+
+.arrow-container {
+    width: 10%;
+}
+
+.game-input-button{
+    position: relative;
+    font-family: joystix;
+    margin-left: 10px;
+    z-index: 101;
+
+}
+
+.interactable-container{
+    display: flex;
+    margin: 1.5vh auto;
+    height: 15vh;
+    width: 80%;
+    position: relative;
+    overflow-y: scroll;
+
+    border: 1px white solid
+}
+
+.list-line-container p {
+    font-size: small;
+    display: inline;
+}
+
+li {
+    padding-left: 5px;
+    display: inline;
+    font-size: small;
+}
+
+.dialogue-frame-container {
+    z-index: 50;
+    height: fit-content;
+    display: inline-block;
+    flex-direction: column;
+    font-size: small;
+    width: 100%;
+
+
+}
+
+.dialogue-text-container {
+    z-index: 50;
+    background-color: #007c00;
+    display: inline-block;
+    width: 100%;
+    height: fit-content;
+    font-size: small;
+
+    border: 1px solid white;
+}
+
+.dialogue-option-container {
+    z-index: 50;
+    background-color: #003B00;
+    height: fit-content;
+    display: inline-block;
+    font-size: small;
+    width: 100%;
+    border: 1px solid white;
+}
+
+.dialogue-separator {
+    color: black;
+    display: inline-block;
+    font-size: small;
+    width: 100%;
+    height: fit-content;
+    z-index: 50;
+    background-color: white;
+}
+
+.dialogue-separator p {
+    margin-block-start: 0.2em;
+    margin-block-end: 0.2em;
+}

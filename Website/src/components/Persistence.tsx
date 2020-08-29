@@ -18,7 +18,6 @@ function isAuth(): boolean {
 }
 
 export async function checkAuthIsValid(): Promise<UserLoggedIn> {
-    console.log("Checking auth")
     if (!isAuth()) {
         return {
             loggedIn: false,
@@ -34,7 +33,9 @@ export async function checkAuthIsValid(): Promise<UserLoggedIn> {
             clearAuth()
         }
         const role = !isString(res) ? (res.successful ? res.outcome.role : null) : null
-        console.log(role)
+        if(role === null){
+            clearAuth()
+        }
         return {
             loggedIn: validAuth,
             role: role

@@ -1,8 +1,8 @@
 import React from "react";
-import {UserLoggedIn} from "../ApiModels";
-import {authLoginRequest, authRegisterRequest} from "../Requests";
+
+import {authRegisterRequest} from "../Requests";
 import {isString} from "../Helper";
-import {saveAuth} from "../Persistence";
+
 import LoginComponent from "./LoginComponent";
 
 interface RegisterProps {
@@ -38,7 +38,7 @@ export default class RegisterComponent extends React.Component<RegisterProps, Re
     private async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
-        if (this.state.password == this.state.passwordConfirm) {
+        if (this.state.password === this.state.passwordConfirm) {
             if (!this.state.registering) {
                 this.setState({
                     registering: true,
