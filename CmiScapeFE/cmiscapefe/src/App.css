@@ -1,0 +1,110 @@
+html,body {
+  height:100%;
+  margin: 0;
+}
+
+.page-container{
+  position: relative;
+
+  background-color: black;
+  background-image: radial-gradient(
+          rgba(0, 150, 0, 0.75), black 120%
+  );
+  color: white;
+  font: 1.3rem joystix, monospace;
+  height: 100vh;
+  text-shadow: 0 0 5px #C8C8C8;
+}
+
+.header{
+  background-color: transparent;
+  height: 2.4vh;
+}
+
+
+
+.header>p{
+  display: inline;
+  padding-right: 2em;
+  margin-top: 0;
+  margin-bottom: 0.1vh;
+}
+
+
+.white{
+  background-color: white;
+  padding-top: 1vh;
+  align-self: flex-end;
+  height: 3vh;
+  color: black;
+  text-align: end;
+}
+
+.white>p{
+  padding-right: 0;
+}
+
+.titletab{
+  text-align: left;
+
+
+  padding: 0 200px;
+  margin-top: 5px;
+  position: absolute;
+  left: 0;
+  padding-left: 5px;
+  padding-right: 20px;
+  height: 4vh;
+}
+
+.titletab:after {
+  content: '';
+  width: 4px;
+  height: 2vh;
+  background: black;
+  opacity: 0;
+  display: inline-block;
+  animation: blink 0.8s linear infinite alternate;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.page-container::after {
+  z-index: 1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+          0deg,
+          rgba(0,0,0, 0.15),
+          rgba(0,0,0, 0.15) 1px,
+          transparent 1px,
+          transparent 2px
+  );
+}
+
+::selection {
+  background: #0080FF;
+  text-shadow: none;
+}
+
+pre {
+  margin: 0;
+}
+
+.content-wrap{
+  padding-top: 2vh;
+  height: 88.5vh;
+}
+

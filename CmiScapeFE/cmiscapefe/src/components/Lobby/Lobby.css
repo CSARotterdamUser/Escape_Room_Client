@@ -1,0 +1,21 @@
+console-window {
+    margin: 2em 0em;
+    padding: 1em;
+
+    width: 75%;
+    max-width: 25em;
+    min-width: 15em;
+
+    border: 0.2em;
+    border-radius: 1em;
+    border-color: white;
+    border-style: solid;
+}
+
+.pregame-text {
+    text-align: center;
+}
+
+.welcome-text {
+    text-align: center;
+}
