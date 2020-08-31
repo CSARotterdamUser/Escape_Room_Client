@@ -86,7 +86,8 @@ export interface DialogueNodePacket {
     Children: Array<DialogueNodePacket>,
     OptionText: string,
     NextDialogueText: string,
-    FunctionID: string
+    FunctionID: string,
+    KeepOpen: boolean
 }
 
 export interface ItemPacket {

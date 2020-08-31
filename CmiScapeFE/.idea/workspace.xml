@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53b37988-0ba8-4ddd-a6c8-750c97d71795" name="Default Changelist" comment="" />
+    <list default="true" id="53b37988-0ba8-4ddd-a6c8-750c97d71795" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/Socket/Packets.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/Socket/Packets.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Game/GameComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Game/GameComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Global.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Global.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Requests.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Requests.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,7 +27,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1gg03pMLaVFM9Nj2kbZAv5Uq2r9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -27,7 +39,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmiscapefe/src/assets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -37,7 +49,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
-    <property name="ts.external.directory.path" value="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\Quinten\Documents\GitHub\Escape_Room_Client\CmiScapeFE\cmiscapefe\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -64,6 +76,8 @@
       <workItem from="1598575139954" duration="6020000" />
       <workItem from="1598599414511" duration="54662000" />
       <workItem from="1598703451211" duration="33770000" />
+      <workItem from="1598883713760" duration="3964000" />
+      <workItem from="1598887701752" duration="3267000" />
     </task>
     <servers />
   </component>
@@ -84,10 +98,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598625813463" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1598555001605">
+    <state x="543" y="90" key="CommitChangelistDialog2" timestamp="1598885131813">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598555001605" />
+    <state x="543" y="90" key="CommitChangelistDialog2/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598885131813" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1598887698362">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598887698362" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1598521352260">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

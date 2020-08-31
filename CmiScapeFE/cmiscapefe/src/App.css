@@ -21,7 +21,9 @@ html,body {
   height: 2.4vh;
 }
 
-
+.hidden-data-field {
+  display: none !important;
+}
 
 .header>p{
   display: inline;
@@ -103,8 +105,10 @@ pre {
   margin: 0;
 }
 
-.content-wrap{
+.content-wrap {
   padding-top: 2vh;
   height: 88.5vh;
 }
+
+
 

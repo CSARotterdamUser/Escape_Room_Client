@@ -68,7 +68,7 @@ export default class App extends React.Component<{}, AppState> {
                     </Route>
                     <div className="page-container">
                         <div className="header">
-                            <p>CAPS</p> <p>CMYK</p> <p>CMI</p> <p>JMDR</p> <p>YMCA</p> <p>BRUH</p>
+                            <p>CAPS</p> <p className="hidden-data-field">72</p> <p>CMYK</p> <p className="hidden-data-field">48</p> <p>JMDR</p> <p className="hidden-data-field">74</p> <p>YMCA</p> <p className="hidden-data-field">7A</p> <p>BRUH</p> <p className="hidden-data-field">65</p>
                         </div>
                         <div className="header white">
                             <p className="titletab"> >>> Cmi/Scape.c.main();</p>

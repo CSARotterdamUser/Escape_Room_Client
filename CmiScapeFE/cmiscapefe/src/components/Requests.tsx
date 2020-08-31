@@ -187,6 +187,24 @@ export async function UpdateTraversableStateRequest(
     return handleRestResponseGet(`${API_GAME_URL}/api/door/${FunctionID}`, options)
 }
 
+export async function PuzzleAnswerRequest(
+    token: string,
+    groupID: number,
+    playerID: number,
+    FunctionID: string,
+    answer: string,
+): Promise<ServiceResponse<string> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Player-Id": playerID.toString(),
+            "Group-Id": groupID.toString(),
+            "input": answer
+        }
+    );
+    return handleRestResponseGet(`${API_GAME_URL}/api/poi/${FunctionID}`, options)
+}
+
+
 
 export async function openWebSocketRequest(
     token: string,
