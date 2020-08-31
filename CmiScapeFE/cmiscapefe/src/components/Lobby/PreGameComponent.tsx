@@ -4,7 +4,8 @@ import './PreGame.css'
 import {
     openWebSocketRequest,
     removeUserRequest,
-    startGameRequest
+    startGameRequest,
+    DeleteGroupRequest
 } from "../Requests";
 import {
     instanceOfConnClosed,
@@ -39,7 +40,8 @@ export interface PreGameState {
     room: RoomPacket | undefined
     startGameErrorMessage: string
     socket: WebSocket | undefined
-    gameStarted: boolean
+    gameStarted: boolean,
+    groupDeleted: boolean,
     readyPlayers: Array<ReadySocket>
 }
 
@@ -56,7 +58,8 @@ export default class PreGameComponent extends React.Component<PreGameProps, PreG
             connect: undefined,
             startGameErrorMessage: "",
             socket: undefined,
-            gameStarted: false
+            gameStarted: false,
+            groupDeleted: false
         }
 
 
@@ -154,6 +157,12 @@ export default class PreGameComponent extends React.Component<PreGameProps, PreG
         }
     }
 
+    private async DeleteGroup() {
+        var response = await DeleteGroupRequest(this.props.group.groupID, this.props.user.res.outcome)
+        console.log(response)
+        this.setState({ groupDeleted: true })
+    }
+
     private async StartGame() {
         await startGameRequest(this.props.user.res.outcome)
 
@@ -197,7 +206,7 @@ export default class PreGameComponent extends React.Component<PreGameProps, PreG
                     }
 
                     {this.state.group.members.length === 1 ?
-                        <button className="delete-group-button button">Delete group</button> : undefined}
+                        <button className="delete-group-button button" onClick={(() => this.DeleteGroup())}>Delete group</button> : undefined}
                 </div>
 
                 <div className="connected-group-info-container">
@@ -221,7 +230,8 @@ export default class PreGameComponent extends React.Component<PreGameProps, PreG
                     </button>
                 </div>
             </div>
-            <p>JOIN CODE: {this.state.group.code}</p>
+            <p className="group-code">JOIN CODE: {this.state.group.code}</p>
+            {this.state.groupDeleted ? <Redirect to="/lobby" /> : undefined}
             {this.state.gameStarted ? <Redirect to="/play"/> : undefined}
         </div>);
     }

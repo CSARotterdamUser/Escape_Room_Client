@@ -98,6 +98,7 @@
 .kicked-in-the-nuts-with-the-fury-of-a-thousand-suns{
     background-color: transparent;
     padding: 4px;
+    margin: 2px;
 }
 .kicked-in-the-nuts-with-the-fury-of-a-thousand-suns:hover{
     background-color: white;
@@ -148,4 +149,8 @@
     width: 50px;
     float: right;
     border-radius: 50%;
+}
+
+.group-code {
+    margin-left: calc(2% + 40px);
 }

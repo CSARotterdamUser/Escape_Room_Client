@@ -136,6 +136,18 @@ export async function removeUserRequest(
     return handleRestResponseHeader(`${API_LOGIN_URL}/api/group/update/removeUser`, options, body);
 }
 
+export async function DeleteGroupRequest(groupID: number, token: string){
+    const options = requestGet({
+        "Session-Id": token,
+        "Content-Type": "Application/Json"
+    });
+    const body = request("DELETE", {
+        "GroupID":
+            groupID.toString()
+    })
+    return handleRestResponseHeader<Promise<string>>(`${API_LOGIN_URL}/api/group/delete`, options, body);
+}
+
 export async function UpdatePOIStateRequest(
     token: string,
     groupID: number,
