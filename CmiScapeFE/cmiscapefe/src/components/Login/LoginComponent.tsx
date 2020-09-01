@@ -31,7 +31,6 @@ export default class LoginComponent extends React.Component<LoginProps, LoginSta
             loggingIn: false,
             user: {
                 loggedIn: false,
-                role: null
             },
             errorMessage: null,
             tabSelected: "Info"
@@ -59,7 +58,6 @@ export default class LoginComponent extends React.Component<LoginProps, LoginSta
                         loggingIn: false,
                         user: {
                             loggedIn: true,
-                            role: authLoginResponse.user.role
                         }
                     })
 

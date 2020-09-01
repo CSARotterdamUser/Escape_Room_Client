@@ -128,12 +128,28 @@ export async function removeUserRequest(
         }
     );
     const body = request("POST", {
-        "PlayerID":
-            playerID.toString(),
+        "UserID":
+            playerID,
         "GroupID":
-            groupID.toString()
+            groupID
     })
     return handleRestResponseHeader(`${API_LOGIN_URL}/api/group/update/removeUser`, options, body);
+}
+
+export async function deleteGroupRequest(
+    groupID: number,
+    token: string,
+): Promise<ServiceResponse<boolean> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Content-Type": "Application/Json"
+        }
+    );
+    const body = request("DELETE", {
+         "GroupId":
+        groupID
+    })
+    return handleRestResponseHeader(`${API_LOGIN_URL}/api/group/delete`, options, body);
 }
 
 export async function UpdatePOIStateRequest(

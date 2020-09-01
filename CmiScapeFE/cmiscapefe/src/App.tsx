@@ -23,7 +23,6 @@ export default class App extends React.Component<{}, AppState> {
         this.state = {
             userloggedin: {
                 loggedIn: false,
-                role: null
             },
             user: undefined,
             group: undefined,
@@ -46,7 +45,7 @@ export default class App extends React.Component<{}, AppState> {
         this.setState({user: data})
     }
 
-    private updateGroup = (data: GroupJoinResponse) => {
+    private updateGroup = (data: GroupJoinResponse | undefined) => {
         this.setState({group: data})
     }
 

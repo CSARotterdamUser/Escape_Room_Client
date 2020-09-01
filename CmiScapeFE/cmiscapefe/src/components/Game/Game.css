@@ -98,7 +98,17 @@
     height: 5vh;
 }
 
-.game-input-window p, button, input {
+.game-input-window p {
+    font-size: x-large;
+    display: inline;
+}
+
+.game-input-window button {
+    font-size: x-large;
+    display: inline;
+}
+
+.game-input-window input {
     font-size: x-large;
     display: inline;
 }

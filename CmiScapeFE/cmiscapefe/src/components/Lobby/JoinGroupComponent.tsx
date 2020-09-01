@@ -8,7 +8,7 @@ import {AuthLoginResponse, GroupJoinResponse} from "../ApiModels";
 interface JoinGroupProps {
     user: AuthLoginResponse
     updateUser: (data: AuthLoginResponse) => void
-    updateGroup: (data: GroupJoinResponse) => void
+    updateGroup: (data: GroupJoinResponse | undefined) => void
 }
 
 interface JoinGroupState {
