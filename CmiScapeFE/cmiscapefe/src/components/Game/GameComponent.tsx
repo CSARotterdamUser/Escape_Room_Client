@@ -18,12 +18,11 @@ import {
     isString
 } from "../Helper";
 import {
-    PuzzleAnswerRequest,
-    UpdateItemStateRequest,
+    PuzzleAnswerRequest, socketDisconnectRequest,
+    UpdateItemStateRequest, UpdatePOIInUseRequest,
     UpdatePOIStateRequest,
     UpdateTraversableStateRequest
 } from "../Requests";
-import {animateScroll} from "react-scroll";
 
 interface GameProps {
     user: AuthLoginResponse,
@@ -41,10 +40,14 @@ interface GameState {
 
     MessageLog: Array<DialogueNodePacket | string>
     InputLog: Array<string>
+    intervalId: NodeJS.Timeout | undefined
 
     currentinput: string
 
+    previousMessageAmount: number
+
     currentGameObject: POIPacket | undefined
+    currentPOI: POIPacket | undefined
 
     inDialogue: boolean
     exitingDialogue: boolean
@@ -54,8 +57,6 @@ interface GameState {
 }
 
 export default class GameComponent extends React.Component<GameProps, GameState> {
-    private messagesEnd: HTMLDivElement | null = null;
-
     constructor(props: any) {
         super(props)
         this.state = {
@@ -68,9 +69,14 @@ export default class GameComponent extends React.Component<GameProps, GameState>
 
             MessageLog: new Array<DialogueNodePacket | string>(),
             InputLog: new Array<string>(),
+            intervalId: undefined,
+
+            previousMessageAmount: 0,
+
             currentinput: "",
 
             currentGameObject: undefined,
+            currentPOI: undefined,
 
             inDialogue: false,
             exitingDialogue: false,
@@ -95,8 +101,30 @@ export default class GameComponent extends React.Component<GameProps, GameState>
 
         console.log(this.props.room.roomName)
 
+        window.addEventListener('beforeunload', (event) => {
+            // Cancel the event as stated by the standard.
+            event.preventDefault();
+            // Chrome requires returnValue to be set.
+            event.returnValue = '';
+
+            this.handleSocketDisconnect();
+        });
+
         // this.props.room.POIs.forEach(poi => this.logAll(poi.Dialogue.Root))
     };
+
+    componentDidMount() {
+        var intervalId = setInterval(this.scrollToBottom, 500);
+        // store intervalId in the state so it can be accessed later:
+        this.setState({intervalId: intervalId});
+    }
+
+    componentWillUnmount() {
+        if (this.state.intervalId !== undefined) {
+            clearInterval(this.state.intervalId);
+        }
+        this.handleSocketDisconnect();
+    }
 
     private logAll(node: DialogueNodePacket) {
         console.log("ND: " + node.NextDialogueText)
@@ -151,12 +179,13 @@ export default class GameComponent extends React.Component<GameProps, GameState>
 
     public updateReady = (ready: Array<ReadySocket>) => {
     }
+
     private handleSubmit() {
         const input = this.state.currentinput;
         this.setState({currentinput: "", InputLog: this.state.InputLog.concat([input])})
         if (this.state.handlingExtraInput) {
-            if(this.state.currentDialogueNode !== undefined &&
-               this.state.ExtraInputFunc !== "") {
+            if (this.state.currentDialogueNode !== undefined &&
+                this.state.ExtraInputFunc !== "") {
                 this.handlePuzzleInput(this.state.ExtraInputFunc, input)
             }
             this.addMessage(
@@ -174,7 +203,11 @@ export default class GameComponent extends React.Component<GameProps, GameState>
                     KeepOpen: false
                 }
             )
-            this.setState({handlingExtraInput: false, ExtraInputFunc: ""})
+            this.setState({InputLog: this.state.InputLog.concat(["Voer 0 in om door te gaan"])})
+            if (this.state.currentPOI !== undefined) {
+                this.updatePOIInUse(this.state.currentPOI.POIName, false);
+            }
+            this.setState({handlingExtraInput: false, ExtraInputFunc: "", currentPOI: undefined})
         } else {
             if (this.state.exitingDialogue) {
                 this.setState({
@@ -203,9 +236,9 @@ export default class GameComponent extends React.Component<GameProps, GameState>
 
                                 if (nextNode.FunctionID !== "" && nextNode.FunctionID !== null && nextNode.FunctionID !== undefined) {
                                     console.log(nextNode.KeepOpen)
-                                    if(nextNode.KeepOpen){
+                                    if (nextNode.KeepOpen) {
                                         this.setState({handlingExtraInput: true, ExtraInputFunc: nextNode.FunctionID})
-                                    }else {
+                                    } else {
                                         if (this.state.currentGameObject !== undefined) {
                                             if (this.state.currentGameObject.IsTraversable) {
                                                 this.updateTraversableState(nextNode.FunctionID)
@@ -219,7 +252,7 @@ export default class GameComponent extends React.Component<GameProps, GameState>
 
                                 if (nextNode.Children.length === 0) {
                                     const temp = nextNode
-                                    if(!nextNode.KeepOpen) {
+                                    if (!nextNode.KeepOpen) {
                                         temp.Children.push({
                                             Children: [],
                                             FunctionID: "",
@@ -232,7 +265,15 @@ export default class GameComponent extends React.Component<GameProps, GameState>
                                         exitingDialogue: true,
                                         inDialogue: false,
                                     })
-                                    this.setState({InputLog: nextNode.KeepOpen ? this.state.InputLog.concat(["Waiting for input..."]) :  this.state.InputLog.concat(["Voer 0 in om door te gaan"])})
+                                    if (nextNode.KeepOpen) {
+                                        this.setState({InputLog: this.state.InputLog.concat(["Waiting for input..."])})
+                                    } else {
+                                        this.setState({InputLog: this.state.InputLog.concat(["Voer 0 in om door te gaan"])})
+                                    }
+                                    if (this.state.currentPOI !== undefined) {
+                                        this.updatePOIInUse(this.state.currentPOI.POIName, false);
+                                        this.setState({currentPOI: undefined})
+                                    }
                                     this.addMessage(temp)
                                 }
                             } else {
@@ -329,15 +370,31 @@ export default class GameComponent extends React.Component<GameProps, GameState>
     }
 
     scrollToBottom() {
-        animateScroll.scrollToBottom({
-            containerId: "message-window"
-        });
+        const targetBox = document.getElementById('message-window');
+        if (targetBox != null) {
+            if (this.state.previousMessageAmount !== this.state.MessageLog.length) {
+                this.setState({previousMessageAmount: this.state.MessageLog.length})
+                targetBox.scrollTop = Number.MAX_SAFE_INTEGER;
+            }
+
+        }
     }
 
     private InteractPOI(index: number) {
-        var rootNode = this.state.POIs[index].Dialogue.Root;
-        this.setState({currentDialogueNode: rootNode, currentGameObject: this.state.POIs[index]})
-        this.addMessage(rootNode)
+        const POI = this.state.POIs[index]
+        if (POI.InUseBy !== -1) {
+            this.addMessage("Someone else is already using this. You're going to have to wait.")
+        } else {
+            var rootNode = this.state.POIs[index].Dialogue.Root;
+            this.setState({
+                currentDialogueNode: rootNode,
+                currentGameObject: this.state.POIs[index],
+                currentPOI: this.state.POIs[index]
+            })
+            this.updatePOIInUse(POI.POIName, true)
+            this.addMessage(rootNode)
+        }
+
 
     }
 
@@ -348,9 +405,8 @@ export default class GameComponent extends React.Component<GameProps, GameState>
     }
 
     private addMessage(message: string | DialogueNodePacket) {
-        this.setState({MessageLog: this.state.MessageLog.concat([message])})
-        this.render()
-        this.scrollToBottom()
+        this.setState({MessageLog: this.state.MessageLog.concat([message])});
+        this.scrollToBottom();
     }
 
     enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -372,7 +428,7 @@ export default class GameComponent extends React.Component<GameProps, GameState>
                                 {this.state.POIs.map(poi =>
                                     <div className="list-line-container">
                                         <p>[{this.state.POIs.indexOf(poi)}]</p>
-                                        <li>{poi.Info.Description}</li>
+                                        <li >{poi.Info.Description}</li>
                                     </div>
                                 )}
                             </ul>
@@ -439,10 +495,8 @@ export default class GameComponent extends React.Component<GameProps, GameState>
                                         <p>{item}</p>
                                     </div>
                                 </div>)}
-                        <div style={{float: "left", clear: "both"}}
-                             ref={(el) => {
-                                 this.messagesEnd = el
-                             }}>
+                        <div className="messages-end"
+                             id="messages-end">
                         </div>
                     </div>
 
@@ -468,6 +522,26 @@ export default class GameComponent extends React.Component<GameProps, GameState>
             this.props.group.groupID,
             this.props.user.user.playerID,
             FunctionID)
+        if (!isString(UpdateStateRequest)) {
+            if (UpdateStateRequest.successful) {
+                console.log("update request successful")
+            } else {
+                console.log(UpdateStateRequest.message)
+            }
+        } else {
+
+            console.log("ERR: " + UpdateStateRequest)
+
+        }
+    }
+
+    private async updatePOIInUse(POIName: string, inUse: boolean) {
+        const UpdateStateRequest = await UpdatePOIInUseRequest(
+            this.props.user.res.outcome,
+            this.props.group.groupID,
+            inUse ? this.props.user.user.playerID : -1,
+            POIName,
+           )
         if (!isString(UpdateStateRequest)) {
             if (UpdateStateRequest.successful) {
                 console.log("update request successful")
@@ -561,4 +635,22 @@ export default class GameComponent extends React.Component<GameProps, GameState>
             console.log("ERR: " + PuzzleRequest)
         }
     }
+
+    private async handleSocketDisconnect() {
+        const socketDisconnect = await socketDisconnectRequest(
+            this.props.user.user.playerID,
+        )
+        if (!isString(socketDisconnect)) {
+            if (socketDisconnect.successful) {
+                console.log("puzzle update request successful")
+            } else {
+                console.log(socketDisconnect.message)
+            }
+        } else {
+            console.log("ERR: " + socketDisconnect)
+        }
+    }
+
+
+
 }

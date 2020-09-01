@@ -82,6 +82,8 @@ export interface POIPacket {
     Info: InfoPacket,
     Dialogue: DialoguePacket
     IsTraversable: boolean
+    InUseBy: number
+    POIName: string
 }
 
 export interface InfoPacket {

@@ -6,16 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="53b37988-0ba8-4ddd-a6c8-750c97d71795" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmiscapefe/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmiscapefe/src/Socket/Packets.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/Socket/Packets.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/ApiModels.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/ApiModels.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Game/Game.css" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Game/Game.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Helper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Helper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/JoinGroupComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/JoinGroupComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/LobbyComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/LobbyComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/PreGameComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/PreGameComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Login/LoginComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Login/LoginComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Persistence.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Persistence.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Game/GameComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Game/GameComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Requests.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Requests.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
-        <option value="CSS File" />
         <option value="TypeScript JSX File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -58,15 +53,15 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\assets" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\assets" />
       <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\components\Intro" />
       <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\fonts" />
       <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\components\Lobby" />
       <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Quinten\WebstormProjects\CmiScapeFE\cmiscapefe\src\assets" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -82,7 +77,8 @@
       <workItem from="1598599414511" duration="54662000" />
       <workItem from="1598703451211" duration="33770000" />
       <workItem from="1598883713760" duration="3964000" />
-      <workItem from="1598887701752" duration="22726000" />
+      <workItem from="1598887701752" duration="25810000" />
+      <workItem from="1598959969968" duration="10878000" />
     </task>
     <servers />
   </component>
@@ -99,18 +95,19 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598634551191" />
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598625813463">
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598972302841">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598972302841" />
     <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598625813463" />
     <state x="543" y="90" key="CommitChangelistDialog2" timestamp="1598907440085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="543" y="90" key="CommitChangelistDialog2/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598907440085" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1598907726725">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1598959976708">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598907726725" />
+    <state x="740" y="275" key="FileChooserDialogImpl/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598959976708" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1598521352260">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -123,10 +120,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="736" y="292" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598600699255" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1598714545853">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1598961676116">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598714545853" />
+    <state x="616" y="240" key="run.anything.popup/-1920.178.1920.1040/1920.193.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1598961676116" />
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/-1920.178.1920.1040/1920.193.1920.1040@0.0.1920.1040" timestamp="1598655940249" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1598634399116">
       <screen x="0" y="0" width="1920" height="1040" />

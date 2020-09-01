@@ -32,6 +32,16 @@ html,body {
   margin-bottom: 0.1vh;
 }
 
+.logout-button {
+  display: inline;
+  z-index: 101;
+  Position: relative;
+  font-family: joystix;
+  margin-right: 50px;
+  width: 10vw;
+  height: 2.5vh;
+}
+
 
 .white{
   background-color: white;

@@ -169,6 +169,33 @@ export async function UpdatePOIStateRequest(
     return handleRestResponseGet(`${API_GAME_URL}/api/poi/${FunctionID}`, options)
 }
 
+export async function UpdatePOIInUseRequest(
+    token: string,
+    groupID: number,
+    playerID: number,
+    POIName: string,
+): Promise<ServiceResponse<string> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Player-Id": playerID.toString(),
+            "Group-Id": groupID.toString(),
+            "POI-Name": POIName,
+        }
+    );
+
+    return handleRestResponseGet(`${API_GAME_URL}/api/poi/updatepoiinuse`, options)
+}
+
+export async function socketDisconnectRequest(
+    playerID: number
+): Promise<ServiceResponse<boolean> | string> {
+    const options = requestGet({
+            "Player-Id": playerID.toString(),
+        }
+    );
+    return handleRestResponseGet(`${API_GAME_URL}/api/socket/disconnect`, options)
+}
+
 export async function UpdateItemStateRequest(
     token: string,
     groupID: number,
