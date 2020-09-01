@@ -198,7 +198,7 @@ export default class GameComponent extends React.Component<GameProps, GameState>
                         KeepOpen: false
                     }],
                     OptionText: "",
-                    NextDialogueText: "^^^^ Antwoord op puzzel verzonden",
+                    NextDialogueText: "^^^^ Antwoord op puzzel verzonden, Interact opnieuw om resultaten te zien",
                     FunctionID: "",
                     KeepOpen: false
                 }
@@ -544,7 +544,7 @@ export default class GameComponent extends React.Component<GameProps, GameState>
            )
         if (!isString(UpdateStateRequest)) {
             if (UpdateStateRequest.successful) {
-                console.log("update request successful")
+                console.log("POI lock update request successful")
             } else {
                 console.log(UpdateStateRequest.message)
             }

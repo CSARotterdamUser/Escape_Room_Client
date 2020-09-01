@@ -6,12 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="53b37988-0ba8-4ddd-a6c8-750c97d71795" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/Socket/Packets.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/Socket/Packets.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Game/Game.css" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Game/Game.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Game/GameComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Game/GameComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Requests.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Requests.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Global.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Global.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/JoinGroupComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/JoinGroupComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/LobbyComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/LobbyComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/PreGame.css" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/PreGame.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/PreGameComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Lobby/PreGameComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Login/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Login/Login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmiscapefe/src/components/Login/LoginComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/cmiscapefe/src/components/Login/LoginComponent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +80,7 @@
       <workItem from="1598703451211" duration="33770000" />
       <workItem from="1598883713760" duration="3964000" />
       <workItem from="1598887701752" duration="25810000" />
-      <workItem from="1598959969968" duration="10878000" />
+      <workItem from="1598959969968" duration="16953000" />
     </task>
     <servers />
   </component>

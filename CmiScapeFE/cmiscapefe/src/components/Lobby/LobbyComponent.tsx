@@ -107,9 +107,8 @@ export default class LobbyComponent extends React.Component<LobbyProps, LobbySta
                             ? <div>
                                 <JoinGroupComponent user={this.state.user} updateUser={this.updateUser}
                                                     updateGroup={this.updateGroup}/>
-                                <p className="pregame-text">You need to join/create a group before you're able to start
-                                    a
-                                    game</p>
+                                <p className="pregame-text">Je moet een groep aanmaken/joinen om het spel te kunnen starten
+                                    </p>
                             </div>
                             : <PreGameComponent
                                 group={this.state.group}

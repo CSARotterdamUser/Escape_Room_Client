@@ -22,7 +22,7 @@
 }
 
 .static-group-member-container {
-    display: inline-block;
+    display: inline-flex;
 }
 
 .connected-group-member-container {
@@ -98,6 +98,8 @@
 .kicked-in-the-nuts-with-the-fury-of-a-thousand-suns{
     background-color: transparent;
     padding: 4px;
+    height: 50%;
+    margin: auto;
 }
 .kicked-in-the-nuts-with-the-fury-of-a-thousand-suns:hover{
     background-color: white;
@@ -106,11 +108,17 @@
 
 .delete-group-button{
     background-color: red;
+    height: 5vh;
+    width: 70%;
+    margin: 0 auto;
 }
 
 .leave-group-button{
+    display: inline;
     position: relative;
     z-index: 101;
+    height: 50%;
+    margin: auto;
     background-color: orange;
 }
 
@@ -148,4 +156,19 @@
     width: 50px;
     float: right;
     border-radius: 50%;
+}
+
+.start-game-button {
+    height: 5vh;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.join-code{
+    text-align: center;
+    margin: 50px auto
+}
+
+.group-member-text {
+    padding-left: 50px;
 }

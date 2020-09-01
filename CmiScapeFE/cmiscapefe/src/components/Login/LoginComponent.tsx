@@ -168,9 +168,46 @@ export default class LoginComponent extends React.Component<LoginProps, LoginSta
                             : this.state.tabSelected === "Register"
                                 ? <RegisterComponent parent={this}/>
                                 : <div>
-                                    <p className="info-header-text">There is text here</p>
+                                    <p className="info-header-text">Welkom bij CMI/Scape !</p>
                                     <div className="info-box-text-container">
-                                        <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                                        <p>LEES DE ONDERSTAANDE TEKST NOG GOED DOOR !!!
+                                            De online adventure game door CMI studenten voor CMI studenten.
+                                            Maak een account aan op het register tabje en log in.
+                                            Je zal dan een scherm zien waar je een groep kan maken of joinen.
+                                            Laat de groepsleider van de groep waar je door je SLC'er bent ingedeeld de groep maken.
+                                            Deze ziet dan een code waarmee jullie de groep in kunnen. Wanneer iedereen klaar is, druk op start game, en de game zal beginnen.
+                                            Je hele groep speelt in dezelfde wereld. Alles wat jullie doen heeft dus invloed op elkaar.
+                                            Hou de communicatie er goed in, en ga met zn allen in een MS Teams of discord call zitten.
+                                            Het spel wordt gespeeld door commands in te voeren in de input box. Er zijn 4 soorten objecten waar je commands op uit kan voeren: </p>
+                                    <table >
+                                        <tr>
+                                        <th>Soort object</th>
+                                        <th colSpan={2}>Commands</th>
+                                        </tr>
+                                        <tr>
+                                            <td>POI</td>
+                                            <td>Interact</td>
+                                            <td>Examine</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Traversable</td>
+                                            <td>Interact</td>
+                                            <td>Examine</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Item</td>
+                                            <td>Pickup</td>
+                                            <td>Examine</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Inventory</td>
+                                            <td>Drop</td>
+                                            <td>Examine</td>
+                                        </tr>
+                                    </table>
+                                        <p>Pluis alles uit, en probeer er zo achter te komen wat er aan de hand is op Wijnhaven.
+                                            Kom je ergens niet uit of denk je een bug gevonden te hebben?
+                                            Er zijn CSAR leden beschikbaar in de INF discord server voor support :  https://discord.gg/YfWVpNE</p>
                                     </div>
                                 </div>
                         }

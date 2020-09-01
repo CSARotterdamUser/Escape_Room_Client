@@ -90,17 +90,18 @@ export default class JoinGroupComponent extends React.Component<JoinGroupProps, 
         return (
             <div>
                 <div className="join-group-text">
-                    <p>INSERT EXPLANATION ABOUT GROUPS HERE</p>
+                    <p>Een groep is nodig om het spel te kunnen spelen. Hou de groepen aan waar je door je SLC'er in bent ingedeeld</p>
                 </div>
 
                 <div className="group-options-container">
                     <div className="group-container">
-                        <p className="join-group-text">INSERT EXPLANATION ABOUT CREATING GROUP</p>
+                        <p className="join-group-text">Klik op deze knop om een groep aan te maken.</p>
+                        <p className="join-group-text">Laat je groepsleider hier een groep aanmaken</p>
                         {this.state.errorMessageCreate === "" ? undefined : <p className="join-group-text">{this.state.errorMessageCreate}</p>}
                         <button className="group-button" onClick={this.CreateGroup}>CREATE GROUP</button>
                     </div>
                     <div className="group-container">
-                        <p className="join-group-text">INSERT EXPLANATION ABOUT JOINING GROUP</p>
+                        <p className="join-group-text">Laat je groepsleider een groep aanmaken, en vraag deze dan om de join code. Voer de code dan hier in</p>
                         <form
                         onSubmit={this.handleSubmit}>
                             <input

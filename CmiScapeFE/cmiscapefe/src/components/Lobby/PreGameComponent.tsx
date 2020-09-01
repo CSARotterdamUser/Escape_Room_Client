@@ -238,7 +238,7 @@ export default class PreGameComponent extends React.Component<PreGameProps, PreG
                     {this.state.group !== undefined && this.state.group.members !== undefined ? this.state.group.members.map(
                         member =>
                             <div className="static-group-member-container">
-                                <div>{member.userName}</div>
+                                <p className="group-member-text">{member.userName}</p>
                                 {(this.state.user.user.id === member.id && this.state.group.members.length > 1) ?
                                     <button className="leave-group-button"
                                             onClick={(event => this.KickPlayer(this.state.user.user.id))}>Leave Group</button>
@@ -257,24 +257,18 @@ export default class PreGameComponent extends React.Component<PreGameProps, PreG
                     {this.state.group.members.map(
                         member =>
                             <div className="connected-group-member-container" key={member.id}>
-                                <div>{member.userName}</div>
+                                <p className="group-member-text">{member.userName}</p>
 
-                                {this.state.readyPlayers !== undefined
-                                    ? member.playerID in this.state.readyPlayers
-                                        ? this.state.readyPlayers.filter(ready => ready.playerID === member.playerID)
-                                            ? <div className="connected-indicator">&nbsp;</div>
-                                            : <div className="disconnected-indicator">&nbsp;</div>
-                                        : <div className="disconnected-indicator">&nbsp;</div>
-                                    : undefined}
+
                             </div>)
 
                     }
-                    <button onClick={event => this.StartGame()}>
+                    <button className="start-game-button" onClick={event => this.StartGame()}>
                         Start Game
                     </button>
                 </div>
             </div>
-            <p>JOIN CODE: {this.state.group.code}</p>
+            <p className="join-code">JOIN CODE: {this.state.group.code}</p>
             {this.state.gameStarted ? <Redirect to="/play"/> : undefined}
         </div>);
     }
