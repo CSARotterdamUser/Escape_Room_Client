@@ -21,13 +21,25 @@ html,body {
   height: 2.4vh;
 }
 
-
+.hidden-data-field {
+  display: none !important;
+}
 
 .header>p{
   display: inline;
   padding-right: 2em;
   margin-top: 0;
   margin-bottom: 0.1vh;
+}
+
+.logout-button {
+  display: inline;
+  z-index: 101;
+  Position: relative;
+  font-family: joystix;
+  margin-right: 50px;
+  width: 10vw;
+  height: 2.5vh;
 }
 
 
@@ -103,8 +115,10 @@ pre {
   margin: 0;
 }
 
-.content-wrap{
+.content-wrap {
   padding-top: 2vh;
   height: 88.5vh;
 }
+
+
 

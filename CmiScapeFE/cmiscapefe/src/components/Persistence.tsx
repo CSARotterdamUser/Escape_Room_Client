@@ -21,29 +21,27 @@ export async function checkAuthIsValid(): Promise<UserLoggedIn> {
     if (!isAuth()) {
         return {
             loggedIn: false,
-            role: null
         }
     }
     const token: string | null = localStorage.getItem("token")
 
     if (token !== null) {
         const res: AuthWhoAmIResponse | string = await authWhoAmIRequest(token)
-        const validAuth: boolean = !isString(res)
-        if (!validAuth) {
+        console.log(isString(res))
+        if (isString(res)) {
             clearAuth()
-        }
-        const role = !isString(res) ? (res.successful ? res.outcome.role : null) : null
-        if(role === null){
-            clearAuth()
+        }else{
+            console.log(res)
+            if(!res.successful){
+                clearAuth()
+            }
         }
         return {
-            loggedIn: validAuth,
-            role: role
+            loggedIn: !isString(res),
         }
     } else {
         return {
             loggedIn: false,
-            role: null
         }
     }
 }

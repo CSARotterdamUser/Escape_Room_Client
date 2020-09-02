@@ -1,5 +1,5 @@
 import {
-    Connection_Closed_Packet, DialogueNodePacket,
+    Connection_Closed_Packet, DialogueNodePacket, Group_Changed_Packet,
     Group_Update_Packet, Info_Packet,
     Keep_Alive_Packet,
     Room_Packet,
@@ -18,6 +18,10 @@ export function isDialoguePacket(arg: any): arg is DialogueNodePacket{
 
 export function instanceOfConnClosed(object: Typed_Packet): object is Connection_Closed_Packet {
     return object.discriminator === 'CONN-CLOSED';
+}
+
+export function instanceOfGroupChange(object: Typed_Packet): object is Group_Changed_Packet {
+    return object.discriminator === 'GROUP-CHANGED-PACKET';
 }
 
 export function instanceOfRoomPacket(object: Typed_Packet): object is Room_Packet {

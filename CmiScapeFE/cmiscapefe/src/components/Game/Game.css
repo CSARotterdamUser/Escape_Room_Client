@@ -71,7 +71,7 @@
 .game-message-window{
     height: 70vh;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     z-index: 101;
     position: relative;
@@ -79,11 +79,16 @@
 
 }
 
+.game-message-window:hover {
+    overflow-y: scroll;
+}
+
 .game-input-window{
     height: 10vh;
     width: 90%;
 
     margin: 2em auto;
+    margin-inside: 2px;
 
     border: 1px white solid;
 }
@@ -98,7 +103,17 @@
     height: 5vh;
 }
 
-.game-input-window p, button, input {
+.game-input-window p {
+    font-size: x-large;
+    display: inline;
+}
+
+.game-input-window button {
+    font-size: x-large;
+    display: inline;
+}
+
+.game-input-window input {
     font-size: x-large;
     display: inline;
 }
@@ -136,6 +151,8 @@
 }
 
 li {
+    position: relative;
+    z-index: 101;
     padding-left: 5px;
     display: inline;
     font-size: small;
@@ -149,41 +166,66 @@ li {
     font-size: small;
     width: 100%;
 
-
 }
 
 .dialogue-text-container {
+    box-sizing:border-box;
     z-index: 50;
     background-color: #007c00;
     display: inline-block;
-    width: 100%;
+    width: 99.5%;
     height: fit-content;
     font-size: small;
-
+    margin-left: 0.25%;
+    margin-right: 0.25%;
     border: 1px solid white;
 }
 
 .dialogue-option-container {
+    box-sizing:border-box;
     z-index: 50;
     background-color: #003B00;
     height: fit-content;
     display: inline-block;
     font-size: small;
-    width: 100%;
+    width: 99.5%;
+    margin-left: 2px;
+    margin-right: 0.25%;
+    margin-bottom: 0.25%;
     border: 1px solid white;
 }
 
+.dialogue-text-container > p {
+    padding: 0 10px;
+}
+
+.dialogue-option-container > p {
+    padding: 0 10px;
+}
+
 .dialogue-separator {
+    box-sizing:border-box;
     color: black;
     display: inline-block;
     font-size: small;
-    width: 100%;
+
+    width: 99.5%;
     height: fit-content;
     z-index: 50;
     background-color: white;
+    margin-bottom: 5px;
+    margin-right: 0.25%;
+    margin-left: 0.25%;
+
 }
 
 .dialogue-separator p {
     margin-block-start: 0.2em;
     margin-block-end: 0.2em;
+}
+
+.messages-end {
+    width: 100%;
+    margin: 0 auto;
+    height: 0;
 }

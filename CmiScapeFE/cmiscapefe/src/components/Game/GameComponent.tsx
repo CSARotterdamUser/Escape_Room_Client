@@ -18,11 +18,11 @@ import {
     isString
 } from "../Helper";
 import {
-    UpdateItemStateRequest,
+    PuzzleAnswerRequest, socketDisconnectRequest,
+    UpdateItemStateRequest, UpdatePOIInUseRequest,
     UpdatePOIStateRequest,
     UpdateTraversableStateRequest
 } from "../Requests";
-import { animateScroll } from "react-scroll";
 
 interface GameProps {
     user: AuthLoginResponse,
@@ -40,19 +40,23 @@ interface GameState {
 
     MessageLog: Array<DialogueNodePacket | string>
     InputLog: Array<string>
+    intervalId: NodeJS.Timeout | undefined
 
     currentinput: string
 
+    previousMessageAmount: number
+
     currentGameObject: POIPacket | undefined
+    currentPOI: POIPacket | undefined
 
     inDialogue: boolean
     exitingDialogue: boolean
     currentDialogueNode: DialogueNodePacket | undefined
+    handlingExtraInput: boolean
+    ExtraInputFunc: string
 }
 
 export default class GameComponent extends React.Component<GameProps, GameState> {
-    private messagesEnd: HTMLDivElement | null = null;
-
     constructor(props: any) {
         super(props)
         this.state = {
@@ -65,13 +69,20 @@ export default class GameComponent extends React.Component<GameProps, GameState>
 
             MessageLog: new Array<DialogueNodePacket | string>(),
             InputLog: new Array<string>(),
+            intervalId: undefined,
+
+            previousMessageAmount: 0,
+
             currentinput: "",
 
             currentGameObject: undefined,
+            currentPOI: undefined,
 
             inDialogue: false,
             exitingDialogue: false,
-            currentDialogueNode: undefined
+            currentDialogueNode: undefined,
+            handlingExtraInput: false,
+            ExtraInputFunc: ""
         }
 
         this.props.socket.onmessage = (event: MessageEvent) => {
@@ -90,8 +101,30 @@ export default class GameComponent extends React.Component<GameProps, GameState>
 
         console.log(this.props.room.roomName)
 
+        window.addEventListener('beforeunload', (event) => {
+            // Cancel the event as stated by the standard.
+            event.preventDefault();
+            // Chrome requires returnValue to be set.
+            event.returnValue = '';
+
+            this.handleSocketDisconnect();
+        });
+
         // this.props.room.POIs.forEach(poi => this.logAll(poi.Dialogue.Root))
     };
+
+    componentDidMount() {
+        var intervalId = setInterval(this.scrollToBottom, 500);
+        // store intervalId in the state so it can be accessed later:
+        this.setState({intervalId: intervalId});
+    }
+
+    componentWillUnmount() {
+        if (this.state.intervalId !== undefined) {
+            clearInterval(this.state.intervalId);
+        }
+        this.handleSocketDisconnect();
+    }
 
     private logAll(node: DialogueNodePacket) {
         console.log("ND: " + node.NextDialogueText)
@@ -117,7 +150,6 @@ export default class GameComponent extends React.Component<GameProps, GameState>
 
         }
     }
-
 
 
     private handleConnClosed(packet: Connection_Closed_Packet) {
@@ -151,156 +183,218 @@ export default class GameComponent extends React.Component<GameProps, GameState>
     private handleSubmit() {
         const input = this.state.currentinput;
         this.setState({currentinput: "", InputLog: this.state.InputLog.concat([input])})
-        if (this.state.exitingDialogue) {
-            this.setState({
-                exitingDialogue: false,
-            })
-            this.addMessage(this.state.room.roomName)
+        if (this.state.handlingExtraInput) {
+            if (this.state.currentDialogueNode !== undefined &&
+                this.state.ExtraInputFunc !== "") {
+                this.handlePuzzleInput(this.state.ExtraInputFunc, input)
+            }
+            this.addMessage(
+                {
+                    Children: [{
+                        Children: [],
+                        OptionText: "Beëindig",
+                        NextDialogueText: "",
+                        FunctionID: "",
+                        KeepOpen: false
+                    }],
+                    OptionText: "",
+                    NextDialogueText: "^^^^ Antwoord op puzzel verzonden, Interact opnieuw om resultaten te zien",
+                    FunctionID: "",
+                    KeepOpen: false
+                }
+            )
+            this.setState({InputLog: this.state.InputLog.concat(["Voer 0 in om door te gaan"])})
+            if (this.state.currentPOI !== undefined) {
+                this.updatePOIInUse(this.state.currentPOI.POIName, false);
+            }
+            this.setState({handlingExtraInput: false, ExtraInputFunc: "", currentPOI: undefined})
         } else {
-            if (this.state.inDialogue && this.state.currentDialogueNode !== undefined) {
-                const children = this.state.currentDialogueNode.Children
+            if (this.state.exitingDialogue) {
+                this.setState({
+                    exitingDialogue: false,
+                })
+                this.setState({InputLog: this.state.InputLog.concat("Exited dialog")})
+                this.addMessage(this.state.room.roomName)
+            } else {
+                if (this.state.inDialogue && this.state.currentDialogueNode !== undefined) {
+                    const children = this.state.currentDialogueNode.Children
 
-                const num = Number.parseInt(input)
-                if (Number.isInteger(num)) {
-                    if (num >= children.length) {
-                        this.addMessage("ERR: Could not find choice with that index")
+                    const num = Number.parseInt(input)
+                    if (Number.isInteger(num)) {
+                        if (num >= children.length) {
+                            this.addMessage("ERR: Could not find choice with that index")
+
+                        } else {
+                            const nextNode = this.state.currentDialogueNode.Children[num]
+
+
+                            if (nextNode !== undefined) {
+                                this.setState({
+                                    currentDialogueNode: nextNode,
+                                })
+                                this.addMessage(nextNode)
+
+                                if (nextNode.FunctionID !== "" && nextNode.FunctionID !== null && nextNode.FunctionID !== undefined) {
+                                    console.log(nextNode.KeepOpen)
+                                    if (nextNode.KeepOpen) {
+                                        this.setState({handlingExtraInput: true, ExtraInputFunc: nextNode.FunctionID})
+                                    } else {
+                                        if (this.state.currentGameObject !== undefined) {
+                                            if (this.state.currentGameObject.IsTraversable) {
+                                                this.updateTraversableState(nextNode.FunctionID)
+                                            } else {
+                                                this.updatePoiState(nextNode.FunctionID);
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                if (nextNode.Children.length === 0) {
+                                    const temp = nextNode
+                                    if (!nextNode.KeepOpen) {
+                                        temp.Children.push({
+                                            Children: [],
+                                            FunctionID: "",
+                                            OptionText: "Beëindig",
+                                            NextDialogueText: "",
+                                            KeepOpen: false,
+                                        })
+                                    }
+                                    this.setState({
+                                        exitingDialogue: true,
+                                        inDialogue: false,
+                                    })
+                                    if (nextNode.KeepOpen) {
+                                        this.setState({InputLog: this.state.InputLog.concat(["Waiting for input..."])})
+                                    } else {
+                                        this.setState({InputLog: this.state.InputLog.concat(["Voer 0 in om door te gaan"])})
+                                    }
+                                    if (this.state.currentPOI !== undefined) {
+                                        this.updatePOIInUse(this.state.currentPOI.POIName, false);
+                                        this.setState({currentPOI: undefined})
+                                    }
+                                    this.addMessage(temp)
+                                }
+                            } else {
+                                this.addMessage("ERR: could not read option choice from input (Je zit nog in een dialog)")
+                            }
+                        }
 
                     } else {
-                        const nextNode = this.state.currentDialogueNode.Children[num]
-                        if (nextNode !== undefined) {
-                            this.setState({
-                                currentDialogueNode: nextNode,
-                            })
-                            this.addMessage(nextNode)
-
-                            if (nextNode.FunctionID !== "" && nextNode.FunctionID !== null && nextNode.FunctionID !== undefined) {
-                                if (this.state.currentGameObject !== undefined) {
-                                    if (this.state.currentGameObject.IsTraversable) {
-                                        this.updateTraversableState(nextNode.FunctionID)
-                                    } else {
-                                        this.updatePoiState(nextNode.FunctionID);
-                                    }
-
-                                }
-                            }
-
-                            if (nextNode.Children.length === 0) {
-                                const temp = nextNode
-                                temp.Children.push({
-                                    Children: [],
-                                    FunctionID: "",
-                                    OptionText: "Beëindig",
-                                    NextDialogueText: ""
-                                })
-                                this.setState({
-                                    exitingDialogue: true,
-                                    inDialogue: false,
-                                })
-                                this.setState({InputLog: this.state.InputLog.concat(["Voer 0 in om door te gaan"])})
-                                this.addMessage(temp)
-                            }
-                        } else {
-                            this.addMessage("ERR: could not read option choice from input (Je zit nog in een dialog)")
-                        }
+                        this.addMessage("ERR: could not read option choice from input (Je zit nog in een dialog)")
                     }
-
                 } else {
-                    this.addMessage("ERR: could not read option choice from input (Je zit nog in een dialog)")
-                }
-            } else {
-                const inputParts = input.toLocaleLowerCase().split('.')
-                switch (inputParts[0]) {
-                    case("poi"):
-                        //TODO: Add error handling
-                        var poinum = Number.parseInt(inputParts[1])
-                        if (Number.isInteger(poinum)) {
-                            switch (inputParts[2]) {
-                                case("interact"):
-                                    this.setState({inDialogue: true})
-                                    this.InteractPOI(poinum)
-                                    break
-                                case("examine"):
-                                    this.addMessage(this.state.POIs[poinum].Info.Examine);
-                                    break
-                                default:
-                                    this.addMessage("ERR: Unknown command. Known commands: Interact, Examine")
+                    const inputParts = input.toLocaleLowerCase().split('.')
+                    switch (inputParts[0]) {
+                        case("poi"):
+                            //TODO: Add error handling
+                            var poinum = Number.parseInt(inputParts[1])
+                            if (Number.isInteger(poinum)) {
+                                switch (inputParts[2]) {
+                                    case("interact"):
+                                        this.setState({inDialogue: true})
+                                        this.InteractPOI(poinum)
+                                        break
+                                    case("examine"):
+                                        this.addMessage(this.state.POIs[poinum].Info.Examine);
+                                        break
+                                    default:
+                                        this.addMessage("ERR: Unknown command. Known commands: Interact, Examine")
+                                }
+                            } else {
+                                this.addMessage(`ERR: POI with ID ${inputParts[1]} not found`)
                             }
-                        } else {
-                            this.addMessage(`ERR: POI with ID ${inputParts[1]} not found`)
-                        }
-                        break
-                    case("traversable"):
-                        //TODO: Add error handling
-                        var travnum = Number.parseInt(inputParts[1])
-                        if (Number.isInteger(travnum)) {
-                            switch (inputParts[2]) {
-                                case("interact"):
-                                    this.setState({inDialogue: true})
-                                    this.InteractTraversable(travnum)
-                                    break
-                                case("examine"):
-                                    this.addMessage(this.state.traversables[travnum].Info.Examine);
-                                    break
-                                default:
-                                    this.addMessage("ERR: Unknown command. Known commands: Interact, Examine")
+                            break
+                        case("traversable"):
+                            //TODO: Add error handling
+                            var travnum = Number.parseInt(inputParts[1])
+                            if (Number.isInteger(travnum)) {
+                                switch (inputParts[2]) {
+                                    case("interact"):
+                                        this.setState({inDialogue: true})
+                                        this.InteractTraversable(travnum)
+                                        break
+                                    case("examine"):
+                                        this.addMessage(this.state.traversables[travnum].Info.Examine);
+                                        break
+                                    default:
+                                        this.addMessage("ERR: Unknown command. Known commands: Interact, Examine")
+                                }
+                            } else {
+                                this.addMessage(`ERR: Item with ID ${inputParts[1]} not found`)
                             }
-                        } else {
-                            this.addMessage(`ERR: Item with ID ${inputParts[1]} not found`)
-                        }
-                        break
-                    case("item"):
-                        var itemnum = Number.parseInt(inputParts[1])
-                        if (Number.isInteger(itemnum)) {
-                            switch (inputParts[2]) {
-                                case("pickup"):
-                                    this.pickupItem(this.state.items[itemnum].ItemName)
-                                    this.addMessage(`Je hebt de ${this.state.items[itemnum].ItemName} opgepakt en in je broekzak gestopt`)
-                                    break
-                                case("examine"):
-                                    this.addMessage(this.state.items[itemnum].info.Examine);
-                                    break
-                                default:
-                                    this.addMessage("ERR: Unknown command. Known commands: Pickup, Examine")
+                            break
+                        case("item"):
+                            var itemnum = Number.parseInt(inputParts[1])
+                            if (Number.isInteger(itemnum)) {
+                                switch (inputParts[2]) {
+                                    case("pickup"):
+                                        this.pickupItem(this.state.items[itemnum].ItemName)
+                                        this.addMessage(`Je hebt de ${this.state.items[itemnum].ItemName} opgepakt en in je broekzak gestopt`)
+                                        break
+                                    case("examine"):
+                                        this.addMessage(this.state.items[itemnum].info.Examine);
+                                        break
+                                    default:
+                                        this.addMessage("ERR: Unknown command. Known commands: Pickup, Examine")
+                                }
+                            } else {
+                                this.addMessage(`ERR: Item with ID ${inputParts[1]} not found`)
                             }
-                        } else {
-                            this.addMessage(`ERR: Item with ID ${inputParts[1]} not found`)
-                        }
-                        break
-                    case("inventory"):
-                        var invnum = Number.parseInt(inputParts[1])
-                        if (Number.isInteger(invnum)) {
-                            switch (inputParts[2]) {
-                                case("drop"):
-                                    this.dropItem(this.state.inventory[invnum].ItemName)
-                                    this.addMessage(`Je hebt de ${this.state.inventory[invnum].ItemName} voorzichtig op de grond gelegd in ${this.state.room.roomName}`)
-                                    break
-                                case("examine"):
-                                    this.addMessage(this.state.inventory[invnum].info.Examine);
-                                    break
-                                default:
-                                    this.addMessage("ERR: Unknown command. Known commands: Drop, Examine")
+                            break
+                        case("inventory"):
+                            var invnum = Number.parseInt(inputParts[1])
+                            if (Number.isInteger(invnum)) {
+                                switch (inputParts[2]) {
+                                    case("drop"):
+                                        this.dropItem(this.state.inventory[invnum].ItemName)
+                                        this.addMessage(`Je hebt de ${this.state.inventory[invnum].ItemName} voorzichtig op de grond gelegd in ${this.state.room.roomName}`)
+                                        break
+                                    case("examine"):
+                                        this.addMessage(this.state.inventory[invnum].info.Examine);
+                                        break
+                                    default:
+                                        this.addMessage("ERR: Unknown command. Known commands: Drop, Examine")
+                                }
+                            } else {
+                                this.addMessage(`ERR: Item with ID ${inputParts[1]} not found`)
                             }
-                        } else {
-                            this.addMessage(`ERR: Item with ID ${inputParts[1]} not found`)
-                        }
-                        break
-                    default:
-                        this.addMessage('ERR: Unknown command. Known commands: POI, Traversable, Item, Inventory')
+                            break
+                        default:
+                            this.addMessage('ERR: Unknown command. Known commands: POI, Traversable, Item, Inventory')
+                    }
                 }
             }
         }
     }
 
     scrollToBottom() {
-        animateScroll.scrollToBottom({
-            containerId: "message-window"
-        });
+        const targetBox = document.getElementById('message-window');
+        if (targetBox != null) {
+            if (this.state.previousMessageAmount !== this.state.MessageLog.length) {
+                this.setState({previousMessageAmount: this.state.MessageLog.length})
+                targetBox.scrollTop = Number.MAX_SAFE_INTEGER;
+            }
+
+        }
     }
 
     private InteractPOI(index: number) {
-        var rootNode = this.state.POIs[index].Dialogue.Root;
-        this.setState({currentDialogueNode: rootNode, currentGameObject: this.state.POIs[index]})
-        this.addMessage(rootNode)
+        const POI = this.state.POIs[index]
+        if (POI.InUseBy !== -1) {
+            this.addMessage("Someone else is already using this. You're going to have to wait.")
+        } else {
+            var rootNode = this.state.POIs[index].Dialogue.Root;
+            this.setState({
+                currentDialogueNode: rootNode,
+                currentGameObject: this.state.POIs[index],
+                currentPOI: this.state.POIs[index]
+            })
+            this.updatePOIInUse(POI.POIName, true)
+            this.addMessage(rootNode)
+        }
+
 
     }
 
@@ -311,14 +405,13 @@ export default class GameComponent extends React.Component<GameProps, GameState>
     }
 
     private addMessage(message: string | DialogueNodePacket) {
-        this.setState({MessageLog: this.state.MessageLog.concat([message])})
-        this.render()
-        this.scrollToBottom()
+        this.setState({MessageLog: this.state.MessageLog.concat([message])});
+        this.scrollToBottom();
     }
 
     enterPressed(event: React.KeyboardEvent<HTMLInputElement>) {
         var code = event.keyCode || event.which;
-        if(code === 13) { //13 is the enter keycode
+        if (code === 13) { //13 is the enter keycode
             this.handleSubmit();
         }
     }
@@ -335,7 +428,7 @@ export default class GameComponent extends React.Component<GameProps, GameState>
                                 {this.state.POIs.map(poi =>
                                     <div className="list-line-container">
                                         <p>[{this.state.POIs.indexOf(poi)}]</p>
-                                        <li>{poi.Info.Description}</li>
+                                        <li >{poi.Info.Description}</li>
                                     </div>
                                 )}
                             </ul>
@@ -402,8 +495,8 @@ export default class GameComponent extends React.Component<GameProps, GameState>
                                         <p>{item}</p>
                                     </div>
                                 </div>)}
-                        <div style={{float: "left", clear: "both"}}
-                             ref={(el) => {this.messagesEnd = el}}>
+                        <div className="messages-end"
+                             id="messages-end">
                         </div>
                     </div>
 
@@ -423,7 +516,6 @@ export default class GameComponent extends React.Component<GameProps, GameState>
     }
 
 
-
     private async updatePoiState(FunctionID: string) {
         const UpdateStateRequest = await UpdatePOIStateRequest(
             this.props.user.res.outcome,
@@ -433,6 +525,26 @@ export default class GameComponent extends React.Component<GameProps, GameState>
         if (!isString(UpdateStateRequest)) {
             if (UpdateStateRequest.successful) {
                 console.log("update request successful")
+            } else {
+                console.log(UpdateStateRequest.message)
+            }
+        } else {
+
+            console.log("ERR: " + UpdateStateRequest)
+
+        }
+    }
+
+    private async updatePOIInUse(POIName: string, inUse: boolean) {
+        const UpdateStateRequest = await UpdatePOIInUseRequest(
+            this.props.user.res.outcome,
+            this.props.group.groupID,
+            inUse ? this.props.user.user.playerID : -1,
+            POIName,
+           )
+        if (!isString(UpdateStateRequest)) {
+            if (UpdateStateRequest.successful) {
+                console.log("POI lock update request successful")
             } else {
                 console.log(UpdateStateRequest.message)
             }
@@ -502,6 +614,43 @@ export default class GameComponent extends React.Component<GameProps, GameState>
             console.log("ERR: " + UpdateStateRequest)
         }
     }
+
+
+    private async handlePuzzleInput(FunctionID: string, input: string) {
+        console.log("Calling " + FunctionID)
+        const PuzzleRequest = await PuzzleAnswerRequest(
+            this.props.user.res.outcome,
+            this.props.group.groupID,
+            this.props.user.user.playerID,
+            FunctionID,
+            input,
+        )
+        if (!isString(PuzzleRequest)) {
+            if (PuzzleRequest.successful) {
+                console.log("puzzle update request successful")
+            } else {
+                console.log(PuzzleRequest.message)
+            }
+        } else {
+            console.log("ERR: " + PuzzleRequest)
+        }
+    }
+
+    private async handleSocketDisconnect() {
+        const socketDisconnect = await socketDisconnectRequest(
+            this.props.user.user.playerID,
+        )
+        if (!isString(socketDisconnect)) {
+            if (socketDisconnect.successful) {
+                console.log("puzzle update request successful")
+            } else {
+                console.log(socketDisconnect.message)
+            }
+        } else {
+            console.log("ERR: " + socketDisconnect)
+        }
+    }
+
 
 
 }

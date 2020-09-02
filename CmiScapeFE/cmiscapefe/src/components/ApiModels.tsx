@@ -1,6 +1,5 @@
 export interface UserLoggedIn {
     loggedIn: boolean
-    role: AuthRole | null
 }
 
 export interface ServiceResponse<T> {
@@ -20,8 +19,6 @@ export interface AuthorizedUser {
     playerID: number
     userName: string
     group: number
-    expireTime: number
-    role: AuthRole
 }
 
 export interface AuthLoginResponse {

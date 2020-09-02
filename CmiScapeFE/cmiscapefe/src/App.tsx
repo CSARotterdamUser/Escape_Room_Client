@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
 import './App.css';
 import {AuthLoginResponse, GroupJoinResponse, UserLoggedIn} from "./components/ApiModels";
-import {checkAuthIsValid} from "./components/Persistence";
+import {checkAuthIsValid, clearAuth} from "./components/Persistence";
 import LoginComponent from "./components/Login/LoginComponent";
 import LobbyComponent from "./components/Lobby/LobbyComponent";
 import GameComponent from "./components/Game/GameComponent";
@@ -23,7 +23,6 @@ export default class App extends React.Component<{}, AppState> {
         this.state = {
             userloggedin: {
                 loggedIn: false,
-                role: null
             },
             user: undefined,
             group: undefined,
@@ -46,7 +45,7 @@ export default class App extends React.Component<{}, AppState> {
         this.setState({user: data})
     }
 
-    private updateGroup = (data: GroupJoinResponse) => {
+    private updateGroup = (data: GroupJoinResponse | undefined) => {
         this.setState({group: data})
     }
 
@@ -56,6 +55,11 @@ export default class App extends React.Component<{}, AppState> {
 
     private updateSocket = (data: WebSocket) => {
         this.setState({socket: data})
+    }
+
+    private logout() {
+        clearAuth()
+        window.location.reload()
     }
 
     public render() {
@@ -68,10 +72,14 @@ export default class App extends React.Component<{}, AppState> {
                     </Route>
                     <div className="page-container">
                         <div className="header">
-                            <p>CAPS</p> <p>CMYK</p> <p>CMI</p> <p>JMDR</p> <p>YMCA</p> <p>BRUH</p>
+                            <p>CAPS</p> <p className="hidden-data-field">72</p> <p>CMYK</p> <p
+                            className="hidden-data-field">48</p> <p>JMDR</p> <p className="hidden-data-field">74</p>
+                            <p>YMCA</p> <p className="hidden-data-field">7A</p> <p>BRUH</p> <p
+                            className="hidden-data-field">65</p>
                         </div>
                         <div className="header white">
                             <p className="titletab"> >>> Cmi/Scape.c.main();</p>
+                            <button className="logout-button" onClick={event => this.logout()}>Log out</button>
                             <p>V.0.1.3658754</p>
                         </div>
                         <div className="content-wrap">
@@ -84,12 +92,13 @@ export default class App extends React.Component<{}, AppState> {
                                 <LobbyComponent user={this.state.user} group={this.state.group}
                                                 updateUser={this.updateUser}
                                                 updateGroup={this.updateGroup}
-                                                updateRoom ={this.updateRoomPacket}
+                                                updateRoom={this.updateRoomPacket}
                                                 updateSocket={this.updateSocket}/>
                             </Route>
                             <Route path="/play" exact>
                                 {this.state.user !== undefined && this.state.group !== undefined && this.state.roomPacket !== undefined && this.state.socket !== undefined
-                                    ? <GameComponent user={this.state.user} group={this.state.group} room={this.state.roomPacket} socket={this.state.socket}/> :
+                                    ? <GameComponent user={this.state.user} group={this.state.group}
+                                                     room={this.state.roomPacket} socket={this.state.socket}/> :
                                     <Redirect to={"/lobby"}/>}
                             </Route>
                             {this.state.user !== undefined && this.state.group !== undefined && this.state.roomPacket !== undefined && this.state.socket !== undefined
@@ -104,5 +113,6 @@ export default class App extends React.Component<{}, AppState> {
 
         )
     }
+
 
 };

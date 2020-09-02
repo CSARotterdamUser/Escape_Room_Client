@@ -128,12 +128,28 @@ export async function removeUserRequest(
         }
     );
     const body = request("POST", {
-        "PlayerID":
-            playerID.toString(),
+        "UserID":
+            playerID,
         "GroupID":
-            groupID.toString()
+            groupID
     })
     return handleRestResponseHeader(`${API_LOGIN_URL}/api/group/update/removeUser`, options, body);
+}
+
+export async function deleteGroupRequest(
+    groupID: number,
+    token: string,
+): Promise<ServiceResponse<boolean> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Content-Type": "Application/Json"
+        }
+    );
+    const body = request("DELETE", {
+         "GroupId":
+        groupID
+    })
+    return handleRestResponseHeader(`${API_LOGIN_URL}/api/group/delete`, options, body);
 }
 
 export async function UpdatePOIStateRequest(
@@ -151,6 +167,33 @@ export async function UpdatePOIStateRequest(
     );
 
     return handleRestResponseGet(`${API_GAME_URL}/api/poi/${FunctionID}`, options)
+}
+
+export async function UpdatePOIInUseRequest(
+    token: string,
+    groupID: number,
+    playerID: number,
+    POIName: string,
+): Promise<ServiceResponse<string> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Player-Id": playerID.toString(),
+            "Group-Id": groupID.toString(),
+            "POI-Name": POIName,
+        }
+    );
+
+    return handleRestResponseGet(`${API_GAME_URL}/api/poi/updatepoiinuse`, options)
+}
+
+export async function socketDisconnectRequest(
+    playerID: number
+): Promise<ServiceResponse<boolean> | string> {
+    const options = requestGet({
+            "Player-Id": playerID.toString(),
+        }
+    );
+    return handleRestResponseGet(`${API_GAME_URL}/api/socket/disconnect`, options)
 }
 
 export async function UpdateItemStateRequest(
@@ -187,6 +230,24 @@ export async function UpdateTraversableStateRequest(
     return handleRestResponseGet(`${API_GAME_URL}/api/door/${FunctionID}`, options)
 }
 
+export async function PuzzleAnswerRequest(
+    token: string,
+    groupID: number,
+    playerID: number,
+    FunctionID: string,
+    answer: string,
+): Promise<ServiceResponse<string> | string> {
+    const options = requestGet({
+            "Session-Id": token,
+            "Player-Id": playerID.toString(),
+            "Group-Id": groupID.toString(),
+            "input": answer
+        }
+    );
+    return handleRestResponseGet(`${API_GAME_URL}/api/poi/${FunctionID}`, options)
+}
+
+
 
 export async function openWebSocketRequest(
     token: string,
@@ -195,7 +256,8 @@ export async function openWebSocketRequest(
     const options = requestGet(
         {
             "Session-Id": token,
-            "Group-Id": groupID.toString()
+            "Group-Id": groupID.toString(),
+            // "Access-Control-Allow-Origin" : "*"
         });
     return handleRestResponseGet(`${API_GAME_URL}/api/socket/create`, options)
 }

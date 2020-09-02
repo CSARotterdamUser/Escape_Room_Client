@@ -21,7 +21,7 @@ interface LobbyProps {
     user: AuthLoginResponse | undefined
     group: GroupJoinResponse | undefined
     updateUser: (data: AuthLoginResponse) => void
-    updateGroup: (data: GroupJoinResponse) => void
+    updateGroup: (data: GroupJoinResponse | undefined) => void
     updateRoom: (data: RoomPacket) => void
     updateSocket: (data: WebSocket) => void
 }
@@ -35,12 +35,13 @@ interface LobbyState {
 
 export default class LobbyComponent extends React.Component<LobbyProps, LobbyState> {
     private _isMounted: boolean;
+
     constructor(props: any) {
         super(props);
         this.state = {
             user: this.props.user,
             group: this.props.group,
-            loggedIn : undefined
+            loggedIn: undefined
         }
 
         this.updateGroup = this.updateGroup.bind(this)
@@ -53,12 +54,12 @@ export default class LobbyComponent extends React.Component<LobbyProps, LobbySta
     async componentDidMount() {
         this._isMounted = true;
         this._isMounted && await this.getUser();
-        if(this.state.user !== undefined) {
-           this._isMounted && await this.fetchGroup(this.state.user.user.group, this.state.user.res.outcome)
+        if (this.state.user !== undefined) {
+            this._isMounted && await this.fetchGroup(this.state.user.user.group, this.state.user.res.outcome)
         }
     }
 
-    private updateGroup(data: GroupJoinResponse) {
+    private updateGroup(data: GroupJoinResponse | undefined) {
         this.setState({group: data})
         this.props.updateGroup(data)
     }
@@ -79,9 +80,8 @@ export default class LobbyComponent extends React.Component<LobbyProps, LobbySta
                 if (ReadGroupRequest.successful) {
                     this.updateGroup(ReadGroupRequest.outcome)
                 } else {
-
+                    this.updateGroup(undefined)
                     console.log(ReadGroupRequest.message)
-
                 }
             } else {
 
@@ -103,23 +103,23 @@ export default class LobbyComponent extends React.Component<LobbyProps, LobbySta
                 : <div>
                     <p className="welcome-text">Welcome, {this.state.user.user.userName}</p>
                     <div className="join-group-container">
-                        {this.state.user.user.group === -1 ?
-                            <JoinGroupComponent user={this.state.user} updateUser={this.updateUser}
-                                                updateGroup={this.updateGroup}/> : undefined}
-
-                        {this.state.user.user.group === -1 ?
-                            <p className="pregame-text">You need to join/create a group before you're able to start a
-                                game</p> : undefined}
-                        {this.state.group !== undefined ?
-                            <PreGameComponent
+                        {this.state.group === undefined
+                            ? <div>
+                                <JoinGroupComponent user={this.state.user} updateUser={this.updateUser}
+                                                    updateGroup={this.updateGroup}/>
+                                <p className="pregame-text">Je moet een groep aanmaken/joinen om het spel te kunnen starten
+                                    </p>
+                            </div>
+                            : <PreGameComponent
                                 group={this.state.group}
                                 user={this.state.user}
                                 updateUser={this.updateUser}
                                 updateGroup={this.updateGroup}
+                                fetchGroup={this.fetchGroup}
                                 updateRoom={this.props.updateRoom}
                                 updateSocket={this.props.updateSocket}
                             />
-                            : undefined}
+                        }
                     </div>
                 </div>)
 
@@ -136,25 +136,27 @@ export default class LobbyComponent extends React.Component<LobbyProps, LobbySta
                 if (!validAuth) {
                     clearAuth()
                 }
-                const service : ServiceResponse<string> = ({
+                const service: ServiceResponse<string> = ({
                     outcome: token,
                     successful: true,
                     message: "",
-                    actionType : ActionType.INFO,
-                    status: 200})
+                    actionType: ActionType.INFO,
+                    status: 200
+                })
 
-                if(!isString(res)){
-                    if(res.successful){
+                if (!isString(res)) {
+                    if (res.successful) {
                         this.setState({user: {res: service, user: res.outcome}})
                     }
                 }
 
             } else {
-                this.setState({loggedIn: {loggedIn: false, role: null}})
+                this.setState({loggedIn: {loggedIn: false}})
             }
         } else {
-            this.setState({loggedIn: {loggedIn: false, role: null}})
+            this.setState({loggedIn: {loggedIn: false}})
         }
+
 
     }
 }

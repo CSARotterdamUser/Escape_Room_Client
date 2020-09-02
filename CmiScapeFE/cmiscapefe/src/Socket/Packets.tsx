@@ -1,3 +1,5 @@
+import {AuthorizedUser} from "../components/ApiModels";
+
 export interface Socket_Packet {
     type: MessageType
     payload: string
@@ -10,7 +12,8 @@ export interface Typed_Packet {
 
 export interface Group_Update_Packet extends Typed_Packet {
     discriminator: 'GROUP-UPDATE'
-    Payload: GroupReadyUpdate
+    Payload: string
+    packet: GroupReadyUpdate
 }
 
 export interface Room_Packet extends Typed_Packet {
@@ -34,6 +37,11 @@ export interface Info_Packet extends Typed_Packet {
     Payload: string
 }
 
+export interface Group_Changed_Packet extends Typed_Packet {
+    discriminator: 'GROUP-CHANGED-PACKET'
+    Payload: string
+}
+
 export interface GroupReadyUpdate {
     ReadySockets: Array<ReadySocket>
 }
@@ -51,12 +59,15 @@ export interface ConnectionClosedPacket {
     reason: string
 }
 
+
+
 export enum MessageType {
     GROUPREADYUPDATE,
     ROOMPACKET,
     KEEPALIVE,
     CONNECTIONCLOSED,
-    INFO
+    INFO,
+    GROUPCHANGENOTIFICATION,
 }
 
 export interface RoomPacket {
@@ -71,6 +82,8 @@ export interface POIPacket {
     Info: InfoPacket,
     Dialogue: DialoguePacket
     IsTraversable: boolean
+    InUseBy: number
+    POIName: string
 }
 
 export interface InfoPacket {
@@ -86,7 +99,8 @@ export interface DialogueNodePacket {
     Children: Array<DialogueNodePacket>,
     OptionText: string,
     NextDialogueText: string,
-    FunctionID: string
+    FunctionID: string,
+    KeepOpen: boolean
 }
 
 export interface ItemPacket {
@@ -96,11 +110,27 @@ export interface ItemPacket {
     ItemName: string
 }
 
+function DeserializeGroupReadyUpdate(Payload: string) {
+    return JSON.parse(Payload) as GroupReadyUpdate
+}
+
+function DeserializeGroupChangedPayload(packet: string) {
+    return JSON.parse(packet) as Group_Changed_Packet
+}
+
+function GetPlayerChangedID(Payload: string) {
+    var ID: number = -1
+    JSON.parse(Payload, (key, value) =>
+    key === "playerChangedID" ? ID = value : value)
+    return ID
+}
+
 export function DeserializePacket(packet: string): Typed_Packet | undefined {
     switch (Number.parseInt(packet[8])) {
         case MessageType.GROUPREADYUPDATE:
             const groupReady: Group_Update_Packet = DeserializeGroupReadyUpdatePayload(packet)
             groupReady.discriminator = 'GROUP-UPDATE'
+            groupReady.packet = DeserializeGroupReadyUpdate(groupReady.Payload)
             return groupReady
         case MessageType.ROOMPACKET:
             var roomPacket: Room_Packet = DeserializeRoomPacketPayload(packet)
@@ -123,6 +153,15 @@ export function DeserializePacket(packet: string): Typed_Packet | undefined {
             const info: Info_Packet = DeserializeInfoPayload(packet)
             info.discriminator = "INFO-PACKET"
             return info
+        case MessageType.GROUPCHANGENOTIFICATION:
+            const GroupChanged = DeserializeGroupChangedPayload(packet)
+            GroupChanged.discriminator = "GROUP-CHANGED-PACKET"
+            // GroupChanged.packet = DeserializeGroupChanged(GroupChanged.Payload)
+            console.log(GroupChanged)
+            console.log(GroupChanged.Payload)
+            // GroupChanged.packet.playerChanged = GetPlayerChangedID(packet)
+            // console.log(GroupChanged.packet.playerChanged)
+            return GroupChanged
         default:
             return undefined
 
@@ -215,11 +254,7 @@ export function getRoomId(payload: string): number {
 }
 
 export function DeserializeGroupReadyUpdatePayload(payload: string): Group_Update_Packet {
-    var temp = JSON.parse(payload, (key, value) =>
-        key === "Payload"
-            ? value as GroupReadyUpdate
-            : value
-    ) as Group_Update_Packet
+    var temp = JSON.parse(payload) as Group_Update_Packet
     return temp
 
 }
